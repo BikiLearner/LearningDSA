@@ -1,0 +1,18 @@
+(https://youtu.be/HGk_ypEuS24?si=asdBdtjzXnhYTXeB)
+
+# Selection sort
+    select minimum and swaps
+    Time complexity - > O(n^2) for best avg and worst
+
+# Bubble sort
+    Push the maximum to the last by adjacent swaps
+    TC - > O(n^2) for worst and average but best O(n)
+
+# Insertion sort
+    TC -> O(n^2) for worst and average  but Best O(n)
+
+# Merge Sort (Divide and merge)(https://youtu.be/ogjf7ORKfd8?si=Iw721uHP4Z9_jL62)
+    TC -> O(n * log n)
+    SC -> O(n)
+
+

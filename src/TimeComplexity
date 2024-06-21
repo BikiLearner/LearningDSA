@@ -1,10 +1,13 @@
-# Rate at which the time taken Increases with respect to Input size is Known as Time complexity
+# Rate at which the time taken Increases with respect to Input size is Known
+as Time complexity
 
 # Three rules for time complexity
     1) TC, worst case scenario
     2) Avoid constants
-    3) avoid lower valuse
+    3) avoid lower values
 # Big-oh O()(Higher bound), Theta , Omega (Lower Bound)
 
 # Space complexity : Auxiliary space (The space u take to solve the problem)
                     + Input space (Space that u take to store the problem)
+
+# 10^8 roughly takes 1 second

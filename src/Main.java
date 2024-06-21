@@ -8,7 +8,7 @@ public class Main {
 //        RecursionCode.reverseArray(arr,0,arr.length-1);
 //        System.out.println(Arrays.toString(arr));
 
-        System.out.println(RecursionCode.sumOfNNumbers(5));
+        System.out.println(RecursionCode.getTheNthFibonacci(6));
 
     }
 

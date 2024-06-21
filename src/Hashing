@@ -1,0 +1,8 @@
+# PreStoring and fetching
+
+# in map for storing and fetching it takes log n time complexity ( in all cases )
+# unordered map lakes O(1) for best and avg case and O(n) for worst case
+
+# division method module the number with 10 or something linear chaining
+
+(https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/)
