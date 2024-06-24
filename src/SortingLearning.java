@@ -11,7 +11,7 @@ public class SortingLearning {
         for (int i = 0; i < n; i++) {
             a[i] = random.nextInt(n);
         }
-        mergeSort(a, 0, a.length -1);
+        QuickSort(a, 0, a.length -1);
         System.out.println(Arrays.toString(a));
     }
 
@@ -109,4 +109,37 @@ public class SortingLearning {
         }
 
     }
+
+    public static void QuickSort(int [] arr, int low , int high){
+        if(low<high) {
+            int pivotIndex = pivotIndexVal(arr, low, high);
+            QuickSort(arr, low, pivotIndex-1);
+            QuickSort(arr, pivotIndex + 1, high);
+        }
+    }
+    public static int pivotIndexVal(int [] arr, int low , int high){
+        int pivot=arr[low];
+        int i=low,j=high;
+        while (i<j){
+            // for descending order arr[i]>=pivot
+            while (arr[i]<=pivot && i<=high-1){
+                i++;
+            }
+            // for descending order arr[j]<pivot
+            while (arr[j]>pivot && j>=low+1){
+                j--;
+            }
+            if(j>i){
+                int temp=arr[i];
+                arr[i]=arr[j];
+                arr[j]=temp;
+            }
+
+        }
+        int temp=arr[j];
+        arr[j]=pivot;
+        arr[low]=temp;
+        return j;
+    }
+
 }

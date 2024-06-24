@@ -15,4 +15,8 @@
     TC -> O(n * log n)
     SC -> O(n)
 
-
+# Quick Sort
+    step 1 : pick a pivot & place it in its correct place in sorted array
+    Step 2 : Smaller on the left and larger in the right
+    TC -> O(n * log n)
+    SC -> O(1)
