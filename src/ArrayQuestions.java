@@ -232,10 +232,10 @@ public class ArrayQuestions {
     public static int linearSearch(int[] arr, int n, int key) {
         for (int i = 0; i < n; i++) {
             if (arr[i] == key) {
-                return i;
+                return -1;
             }
         }
-        return -1;
+        return key;
     }
 
 
@@ -257,28 +257,41 @@ public class ArrayQuestions {
 //        for (int i : integerSet){
 //            arr[j++]=i;
 //        }
+
+        // TC -> O(n1 + n2)
+        // SC-> O(n1 + n2)
         ArrayList<Integer> unionList = new ArrayList<>();
         int i = 0, j = 0;
         while (i < arr1.length && j < arr2.length) {
-            if (arr1[i] < arr2[j]) {
-                unionList.add(arr1[i]);
+            if (arr1[i] <= arr2[j]) {
+                if (unionList.isEmpty() || unionList.getLast() != arr1[i]) {
+                    unionList.add(arr1[i]);
+                }
                 i++;
+
             } else {
-                unionList.add(arr1[j]);
+                if (unionList.isEmpty() || unionList.getLast() != arr2[j]) {
+                    unionList.add(arr2[j]);
+                }
                 j++;
+
             }
         }
         while (i < arr1.length) {
-            unionList.add(arr1[i]);
+            if (unionList.isEmpty() || unionList.getLast() != arr1[i]) {
+                unionList.add(arr1[i]);
+            }
             i++;
         }
         while (j < arr2.length) {
-            unionList.add(arr2[j]);
+            if (unionList.isEmpty() || unionList.getLast() != arr2[j]) {
+                unionList.add(arr2[j]);
+            }
             j++;
         }
 
         int[] arr = new int[unionList.size()];
-        int c=0;
+        int c = 0;
         for (int p : unionList) {
             arr[c++] = p;
         }
@@ -286,7 +299,266 @@ public class ArrayQuestions {
         return arr;
     }
 
+    public static int[] interSection(int[] arr1, int[] arr2) {
 
+        //TC -> O(n1 * n2)
+        //SC-> O(n2)
+        ArrayList<Integer> unionList = new ArrayList<>();
+//        int []visited=new int[arr2.length];
+//        for(int i=0;i< arr1.length;i++){
+//            for (int j = 0; j < arr2.length ; j++) {
+//                if(arr1[i]==arr2[j] && visited[j]==0){
+//                    unionList.add(arr1[i]);
+//                    visited[j]=1;
+//                }
+//                if(arr1[i]<arr2[j]) break;
+//            }
+//        }
+        // TC -> O(n1 + n2)
+        // TC -> O(1)
+        int i = 0, j = 0;
+        while (i < arr1.length && j < arr2.length) {
+            if (arr1[i] < arr2[j]) {
+                i++;
+            } else if (arr1[i] > arr2[j]) {
+                j++;
+            } else if (arr1[i] == arr2[j]) {
+                unionList.add(arr1[i]);
+                i++;
+                j++;
+            }
+        }
+
+
+        int[] arr = new int[unionList.size()];
+        int c = 0;
+        for (int p : unionList) {
+            arr[c++] = p;
+        }
+
+        return arr;
+    }
+
+    public static int missingNumber(int[] a, int N) {
+
+        // TC -> O(n * n)
+        // SC -> O(1)
+//        for(int i=1;i<=n;i++){
+//            missing=linearSearch(arr,arr.length,i);
+//            if(missing!=-1){
+//                return missing;
+//            }
+//        }
+
+
+        //TC -> O(n)+ O(n)
+        // Sc-> O(n)
+
+        int missing = -1;
+//        int [] visited=new int[N+1];
+//        for (int i=0;i<a.length;i++){
+//            visited[a[i]]=a[i];
+//        }
+//        System.out.println(Arrays.toString(visited));
+//        for (int i=1;i<=N;i++){
+//            if(visited[i]!=i){
+//                missing=i;
+//                return missing;
+//            }
+//        }
+        //TC -> O(N)
+        // SC-> O(1)
+//        int sum=(N*(N+1))/2;
+//        int arrSum=0;
+//
+//        for (int i : a){
+//            arrSum+=i;
+//        }
+//        return (sum-arrSum);
+
+        // TC -> O(n) + O(n)
+        int xorVal1 = 0;
+        int xorVal2 = 0;
+        for (int i = 0; i < N; i++) {
+            if (a.length != i) {
+                xorVal2 = xorVal2 ^ a[i];
+            }
+            xorVal1 = xorVal1 ^ (i + 1);
+
+        }
+        System.out.println(xorVal1 + " " + xorVal2);
+        return (xorVal1 ^ xorVal2);
+    }
+
+    public static int maximumConsecutiveOnes(int[] arr) {
+        //TC -> O(n)
+        int count = 0;
+        int prevCount = 0;
+        for (int i : arr) {
+            if (i != 1) {
+                if (prevCount < count) {
+                    prevCount = count;
+                }
+                count = 0;
+            } else {
+                count++;
+            }
+        }
+        return prevCount;
+    }
+
+    public static int numberThatAppearsOnceOtherAppearsTwice(int[] arr) {
+
+//        int max=arr[0];
+//        for (int i = 0; i < arr.length ; i++) {
+//            max=Math.max(max,arr[i]);
+//        }
+//        int [] hashMax=new int[max];
+//        for (int i = 0; i < arr.length ; i++) {
+//            hashMax[arr[i]-1]++;
+//
+//        }
+//
+//        for (int i = 0; i < hashMax.length ; i++) {
+//            if(hashMax[i]==1)
+//                return i+1;
+//        }
+//        return -1;
+
+        //if we use xor
+        //TC -> O(n) , SC->O(1)
+        int xor = 0;
+        for (int j : arr) {
+            xor = j ^ xor;
+        }
+        return xor;
+    }
+
+    public static int longestSubArrayWithSumK(int[] arr, long k) {
+//        int count,savedCount=0;
+//        for(int i=0;i<arr.length;i++){
+//            int sum=0;
+//            count=0;
+//            for(int j=i;j<arr.length;j++){
+//                sum+=arr[j];
+//                count++;
+//                if(sum==k){
+//                    savedCount=Math.max(savedCount,count);
+//                }
+//            }
+//        }
+
+        //TC - > O(n * log n) if using order map else O(n * 1) for optimal  and O(n * n ) for worst
+        //SC-> O(n)
+        //it is optimal for negative number in array
+//        long preSum=0;
+//        int len=0;
+//        HashMap<Long,Integer> perSumMap=new HashMap<>();
+//        for (int i=0;i<arr.length;i++){
+//            preSum=preSum+arr[i];
+//
+//            if(preSum==k){
+//                len=i+1;
+//            }
+//            long nval=preSum-k;
+//            if(perSumMap.containsKey(nval)){
+//                int val=i-(perSumMap.get(nval));
+//                len=Math.max(len,val);
+//            }
+//
+//            if(!perSumMap.containsKey(preSum)){
+//                perSumMap.put(preSum,i);
+//            }
+//
+//        }
+
+        //TC -> O(2n) , sc->O(1)
+        int i = 0, j = 0;
+        long sum = arr[0];
+        int savedCount = 0;
+
+        while (j < arr.length) {
+            //it needs to b loop
+//            if (sum>k) {
+//                sum=sum-arr[i];
+//                i++;
+//            }
+            while (i <= j && sum > k) {
+                sum = sum - arr[i];
+                i++;
+            }
+            if (sum == k) {
+                savedCount = Math.max((j - i + 1), savedCount);
+                System.out.println(savedCount);
+            }
+            j++;
+            if (j < arr.length) sum = sum + arr[j];
+
+        }
+        return savedCount;
+    }
+
+    public static int countNoOfSubArray(int[] arr, int k) {
+        int totalSubArray = 0, preSum = 0;
+        HashMap<Integer, Integer> hashPresum = new HashMap<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            preSum += arr[i];
+            if (preSum == k) totalSubArray++;
+
+            if (hashPresum.containsKey(preSum - k)) {
+                totalSubArray += hashPresum.get(preSum - k);
+            }
+
+            hashPresum.put(preSum, hashPresum.getOrDefault(preSum,0)+1);
+
+
+        }
+
+        return totalSubArray;
+    }
+    public static int[] twoSum(int []arr,int target){
+        int [] ans=new int[2];
+//        for (int i=0;i<arr.length;i++){
+//            for(int j=i;j<arr.length;j++){
+//                int sum=arr[i]+arr[j];
+//                if(sum==target){
+//                    ans[0]=i;
+//                    ans[1]=j;
+//                }
+//            }
+//        }
+        //TC -> O(nlog n) sc-> O(n)
+        HashMap<Integer,Integer> arrayStore=new HashMap<>();
+        for(int i=0;i<arr.length;i++){
+            arrayStore.put(arr[i],i);
+        }
+        for(int i=0;i<arr.length;i++){
+            if(arrayStore.containsKey(target-arr[i])){
+                ans[1]=i;
+                ans[0]=arrayStore.get(target-arr[i]);
+                return ans;
+            }
+        }
+        //Tc-> O(n) + O(nlog n), SC->(n)
+        Arrays.sort(arr);
+        int left=0,right=arr.length-1;
+        while (left<=right){
+            int sum=arr[left]+arr[right];
+            if(sum==target){
+                ans[0]=left;
+                ans[1]=right;
+                return ans;
+            }
+            if(sum>target){
+                right--;
+            }else {
+                left++;
+            }
+
+        }
+        return new int[]{-1,-1};
+    }
     public static void main(String[] args) {
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;
@@ -303,19 +575,27 @@ public class ArrayQuestions {
 //        }
 
 //        moveZeroToEnd(a,n);
-        int[] a = getRandomArray(3);
-        int[] b = getRandomArray(5);
+//        int[] a = getRandomArray(10,10);
+
+        int[] a = {
+                2,6,5,8,11
+
+        };
+
+//        int[] b = getRandomArray(5);
+//        Arrays.sort(a);
+//        Arrays.sort(b);
         System.out.println("Total Array A" + Arrays.toString(a));
-        System.out.println("Total Array B" + Arrays.toString(b));
-        System.out.println("Total Array ANS" + Arrays.toString(unionArray(a, b)));
+//        System.out.println("Total Array B" + Arrays.toString(b));
+        System.out.println("Total Array ANS : " + Arrays.toString(twoSum(a, 14)));
     }
 
-    public static int[] getRandomArray(int n) {
+    public static int[] getRandomArray(int n, int randVal) {
         int[] a = new int[n];
 
         Random random = new Random();
         for (int i = 0; i < n; i++) {
-            a[i] = random.nextInt(n);
+            a[i] = random.nextInt(1, randVal);
         }
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;
