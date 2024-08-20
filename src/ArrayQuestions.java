@@ -559,6 +559,100 @@ public class ArrayQuestions {
         }
         return new int[]{-1,-1};
     }
+
+    public static int[] sortO12Array(int [] arr){
+        //Better solution
+        // Tc -> O(2N)
+//
+//        int count0=0,count1=0,count2=0;
+//        for (int i : arr){
+//            if(i ==0 ) count0++;
+//            else if (i == 1) count1++;
+//            else count2++;
+//        }
+//        for(int i=0;i<count0;i++){
+//            arr[i]=0;
+//        }
+//        for(int i=count0;i<count0+count1;i++){
+//            arr[i]=1;
+//        }
+//        for(int i=count0+count1;i<arr.length;i++){
+//            arr[i]=2;
+//        }
+//        return arr;
+
+        //Dutch National flag Algo
+        //it state that
+        //[O ... low] extreme left = 0
+        //[low ... mid-1]  = 1
+        //[high+1 ... n-1] extreme right = 2
+        //[mid ... high] random numbers 0/1/2(unsorted)
+
+        //TC -> O(n) SC->O(1)
+
+        int low=0,mid=0,high=arr.length-1;
+
+        while (mid<=high){
+            if(arr[mid]==0){
+                int temp=arr[mid];
+                arr[mid]=arr[low];
+                arr[low]=temp;
+                mid++;
+                low++;
+            }else if(arr[mid]==1){
+                mid++;
+            }else if(arr[mid]==2) {
+                int temp=arr[mid];
+                arr[mid]=arr[high];
+                arr[high]=temp;
+                high--;
+            }
+        }
+        return arr;
+    }
+
+    public static int majorityNby2(int [] arr,int N){
+        //*(https://youtu.be/nP_ns3uSh80?si=IxnBXSAQzMUHzlbX)
+        //TC -> O(nlog n) + O(n) SC->O(n)
+//        HashMap<Integer,Integer> countOccurrence=new HashMap<>();
+//        for (int j : arr) {
+//            countOccurrence.put(j, countOccurrence.getOrDefault(j, 0) + 1);
+//        }
+//        for(Map.Entry<Integer,Integer> mapVal:countOccurrence.entrySet()){
+//            if(mapVal.getValue()>(N/2)){
+//                return mapVal.getKey();
+//            }
+//        }
+//        return -1;
+
+        //Moore's Voting algo
+        // TC -> O(n) the second step will not be done if problem state that there
+        // always has majority element else TC-> O(n+n)
+        //SC-> O(1)
+        int cnt=0;
+        int ele=arr[0];
+
+        for (int j : arr) {
+            if (cnt == 0) {
+                cnt = 1;
+                ele = j;
+            } else if (j == ele) {
+                cnt++;
+            } else {
+                cnt--;
+            }
+        }
+
+        int counter=0;
+        for(int i: arr){
+            if(i==ele) counter++;
+        }
+        if (counter>(N/2)) return ele;
+
+        return -1;
+
+
+    }
     public static void main(String[] args) {
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;
@@ -575,19 +669,20 @@ public class ArrayQuestions {
 //        }
 
 //        moveZeroToEnd(a,n);
-//        int[] a = getRandomArray(10,10);
+        int[] a = getRandomArray(5,3);
 
-        int[] a = {
-                2,6,5,8,11
-
-        };
+//        int[] a = {
+//                2,6,5,8,11
+//
+//        };
 
 //        int[] b = getRandomArray(5);
 //        Arrays.sort(a);
 //        Arrays.sort(b);
         System.out.println("Total Array A" + Arrays.toString(a));
 //        System.out.println("Total Array B" + Arrays.toString(b));
-        System.out.println("Total Array ANS : " + Arrays.toString(twoSum(a, 14)));
+//        System.out.println("Total Array ANS : " + Arrays.toString(sortO12Array(a)));
+        System.out.println("Total Array ANS : " + majorityNby2(a,5));
     }
 
     public static int[] getRandomArray(int n, int randVal) {
@@ -595,7 +690,7 @@ public class ArrayQuestions {
 
         Random random = new Random();
         for (int i = 0; i < n; i++) {
-            a[i] = random.nextInt(1, randVal);
+            a[i] = random.nextInt(0, randVal);
         }
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;

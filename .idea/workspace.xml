@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="120eb772-df12-445d-80e5-a0002ef88e1c" name="Changes" comment="Pattern Commit">
-      <change afterPath="$PROJECT_DIR$/src/leetCode/ListNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/leetCode/MergeKSortedList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ArrayQuestions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ArrayQuestions.java" afterDir="false" />
     </list>
@@ -48,7 +46,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.ArrayQuestions.executor": "Debug",
+    "Application.ArrayQuestions.executor": "Run",
     "Application.HashingConcept.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.SortingLearning.executor": "Run",
@@ -165,7 +163,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719753773020</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Pattern Commit">
+      <option name="closed" value="true" />
+      <created>1722592176641</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1722592176641</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -178,11 +184,6 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/RecursionCode.java</url>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ArrayQuestions.java</url>
-          <line>543</line>
-          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
