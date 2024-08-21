@@ -7,7 +7,7 @@ public class Main {
 //        int[] arr={1,2,3,4,5};
 //        RecursionCode.reverseArray(arr,0,arr.length-1);
 //        System.out.println(Arrays.toString(arr));
-
+        LearningPattern.pattern22(5);
         System.out.println(RecursionCode.getTheNthFibonacci(6));
 
     }

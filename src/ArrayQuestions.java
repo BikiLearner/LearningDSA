@@ -653,6 +653,48 @@ public class ArrayQuestions {
 
 
     }
+
+    public static int MaximumSubArraySum(int [] arr){
+        //(https://youtu.be/AHZpyENo7k4?si=exTsjROjAj5I8g1w)
+        int prevSum=Integer.MIN_VALUE,sum=0;
+//        for(int i=0;i<arr.length;i++){
+//            sum=0;
+//            for(int j=i;j<arr.length;j++){
+//                sum+=arr[j];
+//                prevSum = Math.max(prevSum,sum);
+//            }
+//        }
+//        return prevSum;
+        // TC -> O(n) Sc->O(1)
+
+
+        for (int j : arr) {
+            sum += j;
+
+            prevSum = Math.max(prevSum, sum);
+            if (sum < 0) {
+                sum = 0;
+
+            }
+        }
+        return prevSum;
+    }
+    public int maxProfit(int[] prices) {
+        int maxProfit=0,mini=prices[0];
+
+        //TC->O(n) SC->O(1)
+        //why dc as because I am remembering the past
+        for(int i=1;i<prices.length;i++){
+           int sum=prices[i]-mini;
+           maxProfit=Math.max(sum,maxProfit);
+           mini=Math.min(mini,prices[i]);
+        }
+
+
+
+        return maxProfit;
+    }
+
     public static void main(String[] args) {
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;
@@ -669,7 +711,7 @@ public class ArrayQuestions {
 //        }
 
 //        moveZeroToEnd(a,n);
-        int[] a = getRandomArray(5,3);
+        int[] a = getRandomArray(5,10,-10);
 
 //        int[] a = {
 //                2,6,5,8,11
@@ -682,15 +724,15 @@ public class ArrayQuestions {
         System.out.println("Total Array A" + Arrays.toString(a));
 //        System.out.println("Total Array B" + Arrays.toString(b));
 //        System.out.println("Total Array ANS : " + Arrays.toString(sortO12Array(a)));
-        System.out.println("Total Array ANS : " + majorityNby2(a,5));
+        System.out.println("Total Array ANS : " + MaximumSubArraySum(a));
     }
 
-    public static int[] getRandomArray(int n, int randVal) {
+    public static int[] getRandomArray(int n, int randVal,int origin) {
         int[] a = new int[n];
 
         Random random = new Random();
         for (int i = 0; i < n; i++) {
-            a[i] = random.nextInt(0, randVal);
+            a[i] = random.nextInt(origin, randVal);
         }
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;
