@@ -694,6 +694,185 @@ public class ArrayQuestions {
 
         return maxProfit;
     }
+    
+    public static int[] reArrangeElementBySign(int []arr){
+        int prevEle=arr[0];
+//        for (int i = 1; i < arr.length; i++) {
+//            for (int j = i; j < arr.length; j++) {
+//                if(arr[0]<0 && arr[j]>0){
+//                    prevEle=arr[0];
+//                    shiftArray(arr,0,j,arr[j]);
+//                    break;
+//                }
+//                if(prevEle>0 && arr[j]<0 || prevEle<0 && arr[j]>0){
+//                    shiftArray(arr,i,j,arr[j]);
+//                    prevEle=arr[i];
+//                    break;
+//                }
+//            }
+//        }
+        // TC-> O(n) + O(n/2) , SC-> (n)
+//        int [] positive=new int[arr.length/2];
+//        int [] negative=new int[arr.length/2];
+//        int left=0,right=0;
+//        for(int i : arr){
+//            if(i > 0){
+//                positive[left++]=i;
+//            }else if(i<0){
+//                negative[right++]=i;
+//            }
+//        }
+//        for(int i=0;i<arr.length/2;i++){
+//            arr[i*2]=positive[i];
+//            arr[2 * i + 1]=negative[i];
+//        }
+//        return arr;
+
+        // TC -> O(n) SC->O(n)
+//        int pos=0,neg=1;
+//        int [] ans=new int[arr.length];
+//        for (int j : arr) {
+//            if (j > 0) {
+//                ans[pos] = j;
+//                pos += 2;
+//            } else if (j < 0) {
+//                ans[neg] = j;
+//                neg += 2;
+//            }
+//        }
+//        return ans;
+
+        // TC -> O(n) + O(min(pos,neg) + O(leftover) = O(2n) if all the values is neg or pos
+        // SC-> O(n)
+        ArrayList<Integer> positive=new ArrayList<>();
+        ArrayList<Integer> negative=new ArrayList<>();
+        for(int i : arr){
+            if(i > 0){
+                positive.add(i);
+            }else if(i<0){
+                negative.add(i);
+            }
+        }
+        int i,count=0;
+        for(i=0;i<Math.min(positive.size(),negative.size());i++){
+            arr[i*2]=positive.get(i);
+            arr[2 * i + 1]=negative.get(i);
+            count+=2;
+        }
+        while (i<positive.size()){
+            arr[count++]=positive.get(i++);
+        }
+        while (i<negative.size()){
+            arr[count++]=negative.get(i++);
+        }
+        return arr;
+    }
+    public static void shiftArray(int []arr, int left,int right,int elem){
+        while (right>left){
+            int temp=arr[right];
+            arr[right]=arr[right-1];
+            arr[right-1]=temp;
+            right--;
+        }
+        arr[left]=elem;
+    }
+
+    public static void nextPermutation(int [] arr){
+        // Brute force
+        // to generate N permutation we need N! and to generate for N number
+        // we will need N so Total TC-> N! * N
+        // it is very large 5!= 120 15!=10^12 which is very high, so we do
+        // not use brute force
+        // 1.Generate all sorted 2.Linear Search 3.Next is my answer
+
+
+        //TC -> O(3N) optimal
+        int index=findDipNextPermutation(arr);
+        if(index == -1){
+            System.out.println("init");
+            int i=0,j=arr.length-1;
+            while (i<=j && j<arr.length){
+                int temp=arr[i];
+                arr[i]=arr[j];
+                arr[j]=temp;
+                i++;
+                j--;
+            }
+
+        }else {
+            findSmallestThanDipNextPermutation(arr[index],index,arr);
+            int i=index+1,j=arr.length-1;
+            while (i<=j && j<arr.length){
+                int temp=arr[i];
+                arr[i]=arr[j];
+                arr[j]=temp;
+                i++;
+                j--;
+            }
+
+            System.out.println(Arrays.toString(arr));
+        }
+
+
+    }
+    public static int findDipNextPermutation(int [] arr){
+        for (int i = arr.length-2; i >= 0 ; i--) {
+            if(arr[i] < arr[i+1]){
+                System.out.println(i);
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static void findSmallestThanDipNextPermutation(int val,int index,int [] arr){
+        for (int i = arr.length-1; i > index ; i--) {
+            if(val < arr[i]){
+                int temp=arr[index];
+                arr[index]=arr[i];
+                arr[i]=temp;
+                return;
+            }
+        }
+    }
+
+    public static ArrayList<Integer> LeadersInAnArray(int [] arr){
+        ArrayList<Integer> leaders=new ArrayList<>();
+        //TC-> O(n^2)
+//        for(int i=0;i<arr.length;i++){
+//            boolean leaderConfirm=true;
+//            for(int j=i+1;j<arr.length;j++){
+//                if(arr[j]>arr[i]){
+//                    leaderConfirm=false;
+//                    break;
+//                }
+//            }
+//            if(leaderConfirm && !leaders.contains(arr[i])){
+//                leaders.add(arr[i]);
+//            }
+//        }
+        // TC -> O(n) sc-> answer O(n)
+        int max=arr[arr.length-1];
+        leaders.add(max);
+        for(int i=arr.length-1;i>=0;i--){
+            if(arr[i]>max){
+                max=arr[i];
+                leaders.add(arr[i]);
+            }
+        }
+//        Collections.sort(leaders);
+        return leaders;
+    }
+
+    public static int longestConsecutiveSubSequence(int [] arr){
+        HashMap<Integer,Integer> map=new HashMap<>();
+        for(int i=0;i<arr.length;i++){
+            map.put(arr[i],i);
+        }
+        for(int i=0;i<arr.length;i++){
+            map.put(arr[i],i);
+        }
+      return 0;
+    }
 
     public static void main(String[] args) {
 //        for (int i = 0; i < n; i++) {
@@ -711,24 +890,25 @@ public class ArrayQuestions {
 //        }
 
 //        moveZeroToEnd(a,n);
-        int[] a = getRandomArray(5,10,-10);
+//        int[] a = getRandomArray(5,10,-10);
 
-//        int[] a = {
-//                2,6,5,8,11
-//
-//        };
+        int[] a = {
+                1, 2, 2, 1
+        };
 
 //        int[] b = getRandomArray(5);
 //        Arrays.sort(a);
 //        Arrays.sort(b);
-        System.out.println("Total Array A" + Arrays.toString(a));
+//        System.out.println("Total Array A" + Arrays.toString(a));
 //        System.out.println("Total Array B" + Arrays.toString(b));
-//        System.out.println("Total Array ANS : " + Arrays.toString(sortO12Array(a)));
-        System.out.println("Total Array ANS : " + MaximumSubArraySum(a));
+//        System.out.println("Total Array ANS : " + Arrays.toString(reArrangeElementBySign(a)));
+        System.out.println("Total Array ANS : " + LeadersInAnArray(a));
+//        nextPermutation(a);
     }
 
     public static int[] getRandomArray(int n, int randVal,int origin) {
         int[] a = new int[n];
+
 
         Random random = new Random();
         for (int i = 0; i < n; i++) {
