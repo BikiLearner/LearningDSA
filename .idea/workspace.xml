@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="120eb772-df12-445d-80e5-a0002ef88e1c" name="Changes" comment="Pattern Commit">
-      <change afterPath="$PROJECT_DIR$/src/StringQuestions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/leetCode/CombinationSumClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ArrayQuestions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ArrayQuestions.java" afterDir="false" />
     </list>
@@ -46,24 +44,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ArrayQuestions.executor": "Run",
-    "Application.CombinationSumClass.executor": "Run",
-    "Application.HashingConcept.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.SortingLearning.executor": "Run",
-    "Application.StringQuestions.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/CollegeAssignment/day7",
-    "onboarding.tips.debug.path": "D:/Full ON Dsa/LearningDSA/src/Main.java"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ArrayQuestions.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CombinationSumClass.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HashingConcept.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SortingLearning.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StringQuestions.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/CollegeAssignment/day7&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;D:/Full ON Dsa/LearningDSA/src/Main.java&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.ArrayQuestions">
     <configuration name="ArrayQuestions" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ArrayQuestions" />
@@ -205,7 +203,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724247689433</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Pattern Commit">
+      <option name="closed" value="true" />
+      <created>1724407537907</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1724407537907</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

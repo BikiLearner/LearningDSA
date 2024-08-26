@@ -863,17 +863,296 @@ public class ArrayQuestions {
         return leaders;
     }
 
-    public static int longestConsecutiveSubSequence(int [] arr){
-        HashMap<Integer,Integer> map=new HashMap<>();
-        for(int i=0;i<arr.length;i++){
-            map.put(arr[i],i);
+    public static int longestConsecutive(int[] nums) {
+//        int ans=1,previousAns=0;
+        // HashMap<Integer,Integer> map =new HashMap<>();
+        // for(int i=0;i<nums.length;i++){
+        //     map.put(nums[i],i);
+        // }
+
+        // for(int i=0;i<nums.length;i++){
+        //     int target=nums[i]+1;
+        //     ans=1;
+        //     while(map.containsKey(target)){
+        //         target=target+1;
+        //         ans++;
+        //     }
+        //     previousAns=Math.max(ans,previousAns);
+        // }
+        // int c=0;
+        // int target=nums[0];
+        //  while(c<nums.length{
+        //     if(map.containsKey(target)){
+        //         ans++;
+        //         target=target+1;
+        //     }
+        //     ans=1;
+        //     while(map.containsKey(target)){
+        //         target=target+1;
+        //         ans++;
+        //     }
+        //     previousAns=Math.max(ans,previousAns);
+        // }
+
+        // TC->O(nlog n) + O(n)
+//        Arrays.sort(nums);
+//        int lastSmaller=Integer.MIN_VALUE;
+//        for(int i=0;i<nums.length;i++){
+//            if(nums[i]-1 == lastSmaller){
+//                lastSmaller=nums[i];
+//                ans++;
+//            }else if(nums[i] != lastSmaller){
+//                lastSmaller=nums[i];
+//                ans=1;
+//            }
+//            previousAns=Math.max(ans,previousAns);
+//        }
+        // TC-> O(n) + O(2)(for while)
+        if(nums.length==0){
+            return 0;
         }
-        for(int i=0;i<arr.length;i++){
-            map.put(arr[i],i);
+        int longest=1;
+        Set<Integer> st=new HashSet<>();
+
+        for(int i:nums){
+            st.add(i);
         }
-      return 0;
+
+        for(int i : st){
+            if(!st.contains(i-1)){
+                int cnt = 1;
+                int x = i;
+                while (st.contains(x + 1)) {
+                    x = x + 1;
+                    cnt = cnt + 1;
+                }
+                longest = Math.max(longest, cnt);
+            }
+        }
+
+
+
+        return longest;
     }
 
+    public static void setZeroes(int[][] matrix) {
+        //(https://youtu.be/N0MgLvceX7M?si=MjCTxzAYCxDREllf)
+        // TC-> O(m*n) + O(n) + O(m) SC -> O(m+n)
+        ArrayList<Integer> row=new ArrayList<>();
+        ArrayList<Integer> colm=new ArrayList<>();
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0; j<matrix[0].length;j++){
+                if(matrix[i][j]==0){
+                    row.add(i);
+                    colm.add(j);
+                }
+            }
+        }
+        for(int i : row){
+            for(int j=0;j<matrix[i].length;j++){
+                matrix[i][j]=0;
+            }
+        }
+
+        for(int i : colm){
+            for(int j=0;j<matrix.length;j++){
+                matrix[j][i]=0;
+            }
+        }
+
+//        optimal Solution
+//        // int[] row = new int[n]; --> matrix[..][0]
+//        // int[] col = new int[m]; --> matrix[0][..]
+//
+//        int col0 = 1;
+//        // step 1: Traverse the matrix and
+//        // mark 1st row & col accordingly:
+//        for (int i = 0; i < n; i++) {
+//            for (int j = 0; j < m; j++) {
+//                if (matrix.get(i).get(j) == 0) {
+//                    // mark i-th row:
+//                    matrix.get(i).set(0, 0);
+//
+//                    // mark j-th column:
+//                    if (j != 0)
+//                        matrix.get(0).set(j, 0);
+//                    else
+//                        col0 = 0;
+//                }
+//            }
+//        }
+//
+//        // Step 2: Mark with 0 from (1,1) to (n-1, m-1):
+//        for (int i = 1; i < n; i++) {
+//            for (int j = 1; j < m; j++) {
+//                if (matrix.get(i).get(j) != 0) {
+//                    // check for col & row:
+//                    if (matrix.get(i).get(0) == 0 || matrix.get(0).get(j) == 0) {
+//                        matrix.get(i).set(j, 0);
+//                    }
+//                }
+//            }
+//        }
+//
+//        //step 3: Finally mark the 1st col & then 1st row:
+//        if (matrix.get(0).get(0) == 0) {
+//            for (int j = 0; j < m; j++) {
+//                matrix.get(0).set(j, 0);
+//            }
+//        }
+//        if (col0 == 0) {
+//            for (int i = 0; i < n; i++) {
+//                matrix.get(i).set(0, 0);
+//            }
+//        }
+//
+//        return matrix;
+    }
+
+    public void rotate(int[][] matrix) {
+        // int l=0,r=matrix.length-1;
+        // while (l<r){
+        //     for(int i=0;i<(r-l);i++){
+        //         int top=l,bottom=r;
+        //         int topLeft = matrix[top][l+i];
+        //         matrix[top][l+i]=matrix[bottom-i][l];
+        //         matrix[bottom-i][l]=matrix[bottom][r-i];
+        //         matrix[bottom][r-i]=matrix[top+i][r];
+        //         matrix[top+i][r]=topLeft;
+
+        //     }
+        //     r-=1;
+        //     l+=1;
+        // }
+
+        // for(int[] mat:matrix){
+        //     System.out.println(Arrays.toString(mat));
+        // }
+
+
+        //TC ->O(n^2) SC-> O(n^2)
+        int [][] ans=new int[matrix.length][matrix.length];
+
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix.length;j++){
+                ans[j][matrix.length-1-i]=matrix[i][j];
+            }
+        }
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix.length;j++){
+                matrix[i][j]=ans[i][j];
+            }
+        }
+        // TC -> O(n/2 * n/2) + O(nlog n) SC->O(1)
+        for(int i=0;i<matrix.length-1;i++){
+            for(int j=i+1;j<matrix[i].length;j++){
+                int temp=matrix[i][j];
+                matrix[i][j]=matrix[j][i];
+                matrix[j][i]=temp;
+
+            }
+        }
+
+        for(int i=0;i<matrix.length;i++){
+            System.out.println(Arrays.toString(matrix[i]));
+        }
+
+        for(int i=0;i<matrix.length;i++){
+            reverseArray(matrix[i]);
+        }
+
+    }
+    public void reverseArray(int [] arr) {
+        int i = 0, j = arr.length - 1;
+        while (i < j) {
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+            j--;
+        }
+    }
+
+    public static List<Integer> SpiralTraversalOfMatrix(int [][] mat) {
+        // TC->O(n*n) SC->O(n*n)
+        List<Integer> ans = new ArrayList<>();
+
+        int n = mat.length; // no. of rows
+        int m = mat[0].length; // no. of columns
+
+        // Initialize the pointers required for traversal.
+        int top = 0, left = 0, bottom = n - 1, right = m - 1;
+
+        // Loop until all elements are not traversed.
+        while (top <= bottom && left <= right) {
+
+            // For moving left to right
+            for (int i = left; i <= right; i++)
+                ans.add(mat[top][i]);
+
+            top++;
+
+            // For moving top to bottom.
+            for (int i = top; i <= bottom; i++)
+                ans.add(mat[i][right]);
+
+            right--;
+
+            // For moving right to left.
+            if (top <= bottom) {
+                for (int i = right; i >= left; i--)
+                    ans.add(mat[bottom][i]);
+
+                bottom--;
+            }
+
+            // For moving bottom to top.
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--)
+                    ans.add(mat[i][left]);
+
+                left++;
+            }
+        }
+        return ans;
+    }
+
+    public static List<List<Integer>> pascalTriangle(int n){
+
+        // TO find the element if row and column is given
+        // formula is nCr = n!/r!*(n-r)! n=row-1 r=colm-1
+//        int n=4,r=2;
+//        int answer = factorial(n)/(factorial(r) * factorial((n-r)));
+//
+//        double ans=1.0;
+//        for(int i=0;i<r;i++){
+//            ans*= (double) (n - i) /(i+1);
+//        }
+//        System.out.println((int) ans);
+        List<List<Integer>> answer=new ArrayList<>();
+        for (int i=1;i<=n;i++){
+            answer.add(getPascalRow(i));
+        }
+        return answer;
+    }
+    public static List<Integer> getPascalRow(int row){
+        List<Integer> pasCalRow=new ArrayList<>();
+        int ans=1;
+        pasCalRow.add(ans);
+        for(int col=1;col<row ; col++){
+            ans*= row-col;
+            ans/=col;
+            pasCalRow.add(ans);
+
+        }
+        return pasCalRow;
+    }
+    public static int factorial(int n){
+        if(n==0){
+            return 1;
+        }
+        return n * factorial(n-1);
+    }
     public static void main(String[] args) {
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;
@@ -902,8 +1181,11 @@ public class ArrayQuestions {
 //        System.out.println("Total Array A" + Arrays.toString(a));
 //        System.out.println("Total Array B" + Arrays.toString(b));
 //        System.out.println("Total Array ANS : " + Arrays.toString(reArrangeElementBySign(a)));
-        System.out.println("Total Array ANS : " + LeadersInAnArray(a));
+//        System.out.println("Total Array ANS : " + LeadersInAnArray(a));
 //        nextPermutation(a);
+        for (List<Integer> i : pascalTriangle(12)) {
+            System.out.println(i);
+        }
     }
 
     public static int[] getRandomArray(int n, int randVal,int origin) {
