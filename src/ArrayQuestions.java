@@ -510,15 +510,16 @@ public class ArrayQuestions {
                 totalSubArray += hashPresum.get(preSum - k);
             }
 
-            hashPresum.put(preSum, hashPresum.getOrDefault(preSum,0)+1);
+            hashPresum.put(preSum, hashPresum.getOrDefault(preSum, 0) + 1);
 
 
         }
 
         return totalSubArray;
     }
-    public static int[] twoSum(int []arr,int target){
-        int [] ans=new int[2];
+
+    public static int[] twoSum(int[] arr, int target) {
+        int[] ans = new int[2];
 //        for (int i=0;i<arr.length;i++){
 //            for(int j=i;j<arr.length;j++){
 //                int sum=arr[i]+arr[j];
@@ -529,38 +530,38 @@ public class ArrayQuestions {
 //            }
 //        }
         //TC -> O(nlog n) sc-> O(n)
-        HashMap<Integer,Integer> arrayStore=new HashMap<>();
-        for(int i=0;i<arr.length;i++){
-            arrayStore.put(arr[i],i);
+        HashMap<Integer, Integer> arrayStore = new HashMap<>();
+        for (int i = 0; i < arr.length; i++) {
+            arrayStore.put(arr[i], i);
         }
-        for(int i=0;i<arr.length;i++){
-            if(arrayStore.containsKey(target-arr[i])){
-                ans[1]=i;
-                ans[0]=arrayStore.get(target-arr[i]);
+        for (int i = 0; i < arr.length; i++) {
+            if (arrayStore.containsKey(target - arr[i])) {
+                ans[1] = i;
+                ans[0] = arrayStore.get(target - arr[i]);
                 return ans;
             }
         }
         //Tc-> O(n) + O(nlog n), SC->(n)
         Arrays.sort(arr);
-        int left=0,right=arr.length-1;
-        while (left<=right){
-            int sum=arr[left]+arr[right];
-            if(sum==target){
-                ans[0]=left;
-                ans[1]=right;
+        int left = 0, right = arr.length - 1;
+        while (left <= right) {
+            int sum = arr[left] + arr[right];
+            if (sum == target) {
+                ans[0] = left;
+                ans[1] = right;
                 return ans;
             }
-            if(sum>target){
+            if (sum > target) {
                 right--;
-            }else {
+            } else {
                 left++;
             }
 
         }
-        return new int[]{-1,-1};
+        return new int[]{-1, -1};
     }
 
-    public static int[] sortO12Array(int [] arr){
+    public static int[] sortO12Array(int[] arr) {
         //Better solution
         // Tc -> O(2N)
 //
@@ -590,28 +591,28 @@ public class ArrayQuestions {
 
         //TC -> O(n) SC->O(1)
 
-        int low=0,mid=0,high=arr.length-1;
+        int low = 0, mid = 0, high = arr.length - 1;
 
-        while (mid<=high){
-            if(arr[mid]==0){
-                int temp=arr[mid];
-                arr[mid]=arr[low];
-                arr[low]=temp;
+        while (mid <= high) {
+            if (arr[mid] == 0) {
+                int temp = arr[mid];
+                arr[mid] = arr[low];
+                arr[low] = temp;
                 mid++;
                 low++;
-            }else if(arr[mid]==1){
+            } else if (arr[mid] == 1) {
                 mid++;
-            }else if(arr[mid]==2) {
-                int temp=arr[mid];
-                arr[mid]=arr[high];
-                arr[high]=temp;
+            } else if (arr[mid] == 2) {
+                int temp = arr[mid];
+                arr[mid] = arr[high];
+                arr[high] = temp;
                 high--;
             }
         }
         return arr;
     }
 
-    public static int majorityNby2(int [] arr,int N){
+    public static int majorityNby2(int[] arr, int N) {
         //*(https://youtu.be/nP_ns3uSh80?si=IxnBXSAQzMUHzlbX)
         //TC -> O(nlog n) + O(n) SC->O(n)
 //        HashMap<Integer,Integer> countOccurrence=new HashMap<>();
@@ -629,8 +630,8 @@ public class ArrayQuestions {
         // TC -> O(n) the second step will not be done if problem state that there
         // always has majority element else TC-> O(n+n)
         //SC-> O(1)
-        int cnt=0;
-        int ele=arr[0];
+        int cnt = 0;
+        int ele = arr[0];
 
         for (int j : arr) {
             if (cnt == 0) {
@@ -643,20 +644,65 @@ public class ArrayQuestions {
             }
         }
 
-        int counter=0;
-        for(int i: arr){
-            if(i==ele) counter++;
+        int counter = 0;
+        for (int i : arr) {
+            if (i == ele) counter++;
         }
-        if (counter>(N/2)) return ele;
+        if (counter > (N / 2)) return ele;
 
         return -1;
 
 
     }
 
-    public static int MaximumSubArraySum(int [] arr){
+    public static List<Integer> majorityElementNby3(int[] v) {
+        int n = v.length; //size of the array
+
+        int cnt1 = 0, cnt2 = 0; // counts
+        int el1 = Integer.MIN_VALUE; // element 1
+        int el2 = Integer.MIN_VALUE; // element 2
+
+        // applying the Extended Boyer Moore's Voting Algorithm:
+        for (int i = 0; i < n; i++) {
+            if (cnt1 == 0 && el2 != v[i]) {
+                cnt1 = 1;
+                el1 = v[i];
+            } else if (cnt2 == 0 && el1 != v[i]) {
+                cnt2 = 1;
+                el2 = v[i];
+            } else if (v[i] == el1) cnt1++;
+            else if (v[i] == el2) cnt2++;
+            else {
+                cnt1--;
+                cnt2--;
+            }
+        }
+
+        List<Integer> ls = new ArrayList<>(); // list of answers
+
+        // Manually check if the stored elements in
+        // el1 and el2 are the majority elements:
+        cnt1 = 0;
+        cnt2 = 0;
+        for (int i = 0; i < n; i++) {
+            if (v[i] == el1) cnt1++;
+            if (v[i] == el2) cnt2++;
+        }
+
+        int mini = (n / 3) + 1;
+        if (cnt1 >= mini) ls.add(el1);
+        if (cnt2 >= mini) ls.add(el2);
+
+        // Uncomment the following line
+        // if it is told to sort the answer array:
+        //Collections.sort(ls); //TC --> O(2*log2) ~ O(1);
+
+        return ls;
+    }
+
+    public static int MaximumSubArraySum(int[] arr) {
         //(https://youtu.be/AHZpyENo7k4?si=exTsjROjAj5I8g1w)
-        int prevSum=Integer.MIN_VALUE,sum=0;
+        int prevSum = Integer.MIN_VALUE, sum = 0;
 //        for(int i=0;i<arr.length;i++){
 //            sum=0;
 //            for(int j=i;j<arr.length;j++){
@@ -679,24 +725,24 @@ public class ArrayQuestions {
         }
         return prevSum;
     }
+
     public int maxProfit(int[] prices) {
-        int maxProfit=0,mini=prices[0];
+        int maxProfit = 0, mini = prices[0];
 
         //TC->O(n) SC->O(1)
         //why dc as because I am remembering the past
-        for(int i=1;i<prices.length;i++){
-           int sum=prices[i]-mini;
-           maxProfit=Math.max(sum,maxProfit);
-           mini=Math.min(mini,prices[i]);
+        for (int i = 1; i < prices.length; i++) {
+            int sum = prices[i] - mini;
+            maxProfit = Math.max(sum, maxProfit);
+            mini = Math.min(mini, prices[i]);
         }
-
 
 
         return maxProfit;
     }
-    
-    public static int[] reArrangeElementBySign(int []arr){
-        int prevEle=arr[0];
+
+    public static int[] reArrangeElementBySign(int[] arr) {
+        int prevEle = arr[0];
 //        for (int i = 1; i < arr.length; i++) {
 //            for (int j = i; j < arr.length; j++) {
 //                if(arr[0]<0 && arr[j]>0){
@@ -744,40 +790,41 @@ public class ArrayQuestions {
 
         // TC -> O(n) + O(min(pos,neg) + O(leftover) = O(2n) if all the values is neg or pos
         // SC-> O(n)
-        ArrayList<Integer> positive=new ArrayList<>();
-        ArrayList<Integer> negative=new ArrayList<>();
-        for(int i : arr){
-            if(i > 0){
+        ArrayList<Integer> positive = new ArrayList<>();
+        ArrayList<Integer> negative = new ArrayList<>();
+        for (int i : arr) {
+            if (i > 0) {
                 positive.add(i);
-            }else if(i<0){
+            } else if (i < 0) {
                 negative.add(i);
             }
         }
-        int i,count=0;
-        for(i=0;i<Math.min(positive.size(),negative.size());i++){
-            arr[i*2]=positive.get(i);
-            arr[2 * i + 1]=negative.get(i);
-            count+=2;
+        int i, count = 0;
+        for (i = 0; i < Math.min(positive.size(), negative.size()); i++) {
+            arr[i * 2] = positive.get(i);
+            arr[2 * i + 1] = negative.get(i);
+            count += 2;
         }
-        while (i<positive.size()){
-            arr[count++]=positive.get(i++);
+        while (i < positive.size()) {
+            arr[count++] = positive.get(i++);
         }
-        while (i<negative.size()){
-            arr[count++]=negative.get(i++);
+        while (i < negative.size()) {
+            arr[count++] = negative.get(i++);
         }
         return arr;
     }
-    public static void shiftArray(int []arr, int left,int right,int elem){
-        while (right>left){
-            int temp=arr[right];
-            arr[right]=arr[right-1];
-            arr[right-1]=temp;
+
+    public static void shiftArray(int[] arr, int left, int right, int elem) {
+        while (right > left) {
+            int temp = arr[right];
+            arr[right] = arr[right - 1];
+            arr[right - 1] = temp;
             right--;
         }
-        arr[left]=elem;
+        arr[left] = elem;
     }
 
-    public static void nextPermutation(int [] arr){
+    public static void nextPermutation(int[] arr) {
         // Brute force
         // to generate N permutation we need N! and to generate for N number
         // we will need N so Total TC-> N! * N
@@ -787,25 +834,25 @@ public class ArrayQuestions {
 
 
         //TC -> O(3N) optimal
-        int index=findDipNextPermutation(arr);
-        if(index == -1){
+        int index = findDipNextPermutation(arr);
+        if (index == -1) {
             System.out.println("init");
-            int i=0,j=arr.length-1;
-            while (i<=j && j<arr.length){
-                int temp=arr[i];
-                arr[i]=arr[j];
-                arr[j]=temp;
+            int i = 0, j = arr.length - 1;
+            while (i <= j && j < arr.length) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
                 i++;
                 j--;
             }
 
-        }else {
-            findSmallestThanDipNextPermutation(arr[index],index,arr);
-            int i=index+1,j=arr.length-1;
-            while (i<=j && j<arr.length){
-                int temp=arr[i];
-                arr[i]=arr[j];
-                arr[j]=temp;
+        } else {
+            findSmallestThanDipNextPermutation(arr[index], index, arr);
+            int i = index + 1, j = arr.length - 1;
+            while (i <= j && j < arr.length) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
                 i++;
                 j--;
             }
@@ -815,28 +862,30 @@ public class ArrayQuestions {
 
 
     }
-    public static int findDipNextPermutation(int [] arr){
-        for (int i = arr.length-2; i >= 0 ; i--) {
-            if(arr[i] < arr[i+1]){
+
+    public static int findDipNextPermutation(int[] arr) {
+        for (int i = arr.length - 2; i >= 0; i--) {
+            if (arr[i] < arr[i + 1]) {
                 System.out.println(i);
                 return i;
             }
         }
         return -1;
     }
-    public static void findSmallestThanDipNextPermutation(int val,int index,int [] arr){
-        for (int i = arr.length-1; i > index ; i--) {
-            if(val < arr[i]){
-                int temp=arr[index];
-                arr[index]=arr[i];
-                arr[i]=temp;
+
+    public static void findSmallestThanDipNextPermutation(int val, int index, int[] arr) {
+        for (int i = arr.length - 1; i > index; i--) {
+            if (val < arr[i]) {
+                int temp = arr[index];
+                arr[index] = arr[i];
+                arr[i] = temp;
                 return;
             }
         }
     }
 
-    public static ArrayList<Integer> LeadersInAnArray(int [] arr){
-        ArrayList<Integer> leaders=new ArrayList<>();
+    public static ArrayList<Integer> LeadersInAnArray(int[] arr) {
+        ArrayList<Integer> leaders = new ArrayList<>();
         //TC-> O(n^2)
 //        for(int i=0;i<arr.length;i++){
 //            boolean leaderConfirm=true;
@@ -851,11 +900,11 @@ public class ArrayQuestions {
 //            }
 //        }
         // TC -> O(n) sc-> answer O(n)
-        int max=arr[arr.length-1];
+        int max = arr[arr.length - 1];
         leaders.add(max);
-        for(int i=arr.length-1;i>=0;i--){
-            if(arr[i]>max){
-                max=arr[i];
+        for (int i = arr.length - 1; i >= 0; i--) {
+            if (arr[i] > max) {
+                max = arr[i];
                 leaders.add(arr[i]);
             }
         }
@@ -908,18 +957,18 @@ public class ArrayQuestions {
 //            previousAns=Math.max(ans,previousAns);
 //        }
         // TC-> O(n) + O(2)(for while)
-        if(nums.length==0){
+        if (nums.length == 0) {
             return 0;
         }
-        int longest=1;
-        Set<Integer> st=new HashSet<>();
+        int longest = 1;
+        Set<Integer> st = new HashSet<>();
 
-        for(int i:nums){
+        for (int i : nums) {
             st.add(i);
         }
 
-        for(int i : st){
-            if(!st.contains(i-1)){
+        for (int i : st) {
+            if (!st.contains(i - 1)) {
                 int cnt = 1;
                 int x = i;
                 while (st.contains(x + 1)) {
@@ -931,32 +980,31 @@ public class ArrayQuestions {
         }
 
 
-
         return longest;
     }
 
     public static void setZeroes(int[][] matrix) {
         //(https://youtu.be/N0MgLvceX7M?si=MjCTxzAYCxDREllf)
         // TC-> O(m*n) + O(n) + O(m) SC -> O(m+n)
-        ArrayList<Integer> row=new ArrayList<>();
-        ArrayList<Integer> colm=new ArrayList<>();
-        for(int i=0;i<matrix.length;i++){
-            for(int j=0; j<matrix[0].length;j++){
-                if(matrix[i][j]==0){
+        ArrayList<Integer> row = new ArrayList<>();
+        ArrayList<Integer> colm = new ArrayList<>();
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] == 0) {
                     row.add(i);
                     colm.add(j);
                 }
             }
         }
-        for(int i : row){
-            for(int j=0;j<matrix[i].length;j++){
-                matrix[i][j]=0;
+        for (int i : row) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = 0;
             }
         }
 
-        for(int i : colm){
-            for(int j=0;j<matrix.length;j++){
-                matrix[j][i]=0;
+        for (int i : colm) {
+            for (int j = 0; j < matrix.length; j++) {
+                matrix[j][i] = 0;
             }
         }
 
@@ -1031,38 +1079,39 @@ public class ArrayQuestions {
 
 
         //TC ->O(n^2) SC-> O(n^2)
-        int [][] ans=new int[matrix.length][matrix.length];
+        int[][] ans = new int[matrix.length][matrix.length];
 
-        for(int i=0;i<matrix.length;i++){
-            for(int j=0;j<matrix.length;j++){
-                ans[j][matrix.length-1-i]=matrix[i][j];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                ans[j][matrix.length - 1 - i] = matrix[i][j];
             }
         }
-        for(int i=0;i<matrix.length;i++){
-            for(int j=0;j<matrix.length;j++){
-                matrix[i][j]=ans[i][j];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                matrix[i][j] = ans[i][j];
             }
         }
         // TC -> O(n/2 * n/2) + O(nlog n) SC->O(1)
-        for(int i=0;i<matrix.length-1;i++){
-            for(int j=i+1;j<matrix[i].length;j++){
-                int temp=matrix[i][j];
-                matrix[i][j]=matrix[j][i];
-                matrix[j][i]=temp;
+        for (int i = 0; i < matrix.length - 1; i++) {
+            for (int j = i + 1; j < matrix[i].length; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
 
             }
         }
 
-        for(int i=0;i<matrix.length;i++){
+        for (int i = 0; i < matrix.length; i++) {
             System.out.println(Arrays.toString(matrix[i]));
         }
 
-        for(int i=0;i<matrix.length;i++){
+        for (int i = 0; i < matrix.length; i++) {
             reverseArray(matrix[i]);
         }
 
     }
-    public void reverseArray(int [] arr) {
+
+    public void reverseArray(int[] arr) {
         int i = 0, j = arr.length - 1;
         while (i < j) {
             int temp = arr[i];
@@ -1073,7 +1122,7 @@ public class ArrayQuestions {
         }
     }
 
-    public static List<Integer> SpiralTraversalOfMatrix(int [][] mat) {
+    public static List<Integer> SpiralTraversalOfMatrix(int[][] mat) {
         // TC->O(n*n) SC->O(n*n)
         List<Integer> ans = new ArrayList<>();
 
@@ -1117,7 +1166,7 @@ public class ArrayQuestions {
         return ans;
     }
 
-    public static List<List<Integer>> pascalTriangle(int n){
+    public static List<List<Integer>> pascalTriangle(int n) {
 
         // TO find the element if row and column is given
         // formula is nCr = n!/r!*(n-r)! n=row-1 r=colm-1
@@ -1129,30 +1178,166 @@ public class ArrayQuestions {
 //            ans*= (double) (n - i) /(i+1);
 //        }
 //        System.out.println((int) ans);
-        List<List<Integer>> answer=new ArrayList<>();
-        for (int i=1;i<=n;i++){
+        List<List<Integer>> answer = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
             answer.add(getPascalRow(i));
         }
         return answer;
     }
-    public static List<Integer> getPascalRow(int row){
-        List<Integer> pasCalRow=new ArrayList<>();
-        int ans=1;
+
+    public static List<Integer> getPascalRow(int row) {
+        List<Integer> pasCalRow = new ArrayList<>();
+        int ans = 1;
         pasCalRow.add(ans);
-        for(int col=1;col<row ; col++){
-            ans*= row-col;
-            ans/=col;
+        for (int col = 1; col < row; col++) {
+            ans *= row - col;
+            ans /= col;
             pasCalRow.add(ans);
 
         }
         return pasCalRow;
     }
-    public static int factorial(int n){
-        if(n==0){
+
+    public static int factorial(int n) {
+        if (n == 0) {
             return 1;
         }
-        return n * factorial(n-1);
+        return n * factorial(n - 1);
     }
+
+
+    public static List<List<Integer>> threeSum(int[] nums) {
+//        (https://youtu.be/DhFh8Kw7ymk?si=9_MxT_4k83_YG4Dx)
+        // TC-> O(n^2) + O(nlog n)
+//        List<List<Integer>> dlists = new ArrayList<>();
+//        int len = nums.length;
+//        Arrays.sort(nums);
+//
+//        for (int i = 0; i < len - 2; i++) {
+//            if (i > 0 && nums[i] == nums[i - 1]) {
+//                continue; // Skip duplicate elements
+//            }
+//            int left = i + 1;
+//            int right = len - 1;
+//
+//            while (left < right) {
+//                int sum = nums[i] + nums[left] + nums[right];
+//                if (sum == 0) {
+//                    dlists.add(Arrays.asList(nums[i], nums[left], nums[right]));
+//                    // Move pointers to avoid duplicates
+//                    while (left < right && nums[left] == nums[left + 1]) {
+//                        left++;
+//                    }
+//                    while (left < right && nums[right] == nums[right - 1]) {
+//                        right--;
+//                    }
+//                    left++;
+//                    right--;
+//                } else if (sum < 0) {
+//                    left++;
+//                } else {
+//                    right--;
+//                }
+//            }
+//        }
+        //TC -> O(n^3) SC->O(number of triples
+//        Set<List<Integer>> values=new HashSet<>();
+//        for(int i=0;i<nums.length;i++){
+//            for(int j=i+1;j<nums.length-1;j++){
+//               for(int k=j+1;k<nums.length;k++){
+//                   if(i!=j && i!=k && j!=k){
+//                       int sum=nums[i]+nums[j]+nums[k];
+//                       if(sum==0){
+//                           List<Integer> sumList=new ArrayList<>();
+//                           sumList.add(nums[i]);
+//                           sumList.add(nums[j]);
+//                           sumList.add(nums[k]);
+//                           Collections.sort(sumList);
+//                           values.add(sumList);
+//
+//                       }
+//                   }
+//               }
+//            }
+//        }
+        // TC->O(n^2 * log n) SC-> O(n) + O(answer values)
+        Set<List<Integer>> values = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            Set<Integer> hasSet = new HashSet<>();
+            for (int j = i + 1; j < nums.length; j++) {
+                int third = -(nums[i] - nums[j]);
+                if (hasSet.contains(third)) {
+                    List<Integer> temp = Arrays.asList(nums[i], nums[j], third);
+                    Collections.sort(temp);
+                    values.add(temp);
+                }
+                hasSet.add(nums[j]);
+            }
+        }
+
+        return new ArrayList<>(values);
+    }
+
+    public static List<List<Integer>> fourSum(int[] nums, int target) {
+
+        // Optimal TC -> O(nlog n) + O(n * n *  n) SC->O(quads)
+//        List<List<Integer>> dlists = new ArrayList<>();
+//        Arrays.sort(nums);
+//        int n=nums.length;
+//        List<List<Integer>> answer=new ArrayList<>();
+//        for(int i=0;i<n;i++){
+//            if(i>0 && nums[i]==nums[i-1]) continue;
+//
+//            for(int j=i+1;j<n;j++){
+//                if(j>i+1 && nums[j]==nums[j-1]) continue;
+//
+//                int left=j+1;
+//                int right=n-1;
+//
+//                while(left<right){
+//                    long sum = nums[i] + nums[j];
+//                    sum+=nums[left] + nums[right];
+//                    if(sum==target){
+//
+//                        answer.add(Arrays.asList(nums[i],nums[j],nums[left],nums[right]));
+//                        while(left<right && nums[left]==nums[left+1]){
+//                            left++;
+//                        }
+//                        while(left < right && nums[right]==nums[right-1]){
+//                            right--;
+//                        }
+//                        right--;
+//                        left++;
+//                    }else if(sum < target){
+//                        left++;
+//                    }else{
+//                        right--;
+//                    }
+//                }
+//            }
+//        }
+//        return answer;
+        //TC -> O(n^3) + log (value in set) SC-> O(n) + O(quads*2)
+        HashSet<List<Integer>> values = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                HashSet<Long> hashSet = new HashSet<>();
+                for (int k = j + 1; k < nums.length; k++) {
+                    long sum = nums[i] + nums[j];
+                    sum += nums[k];
+                    long forthValue = target - sum;
+                    if (hashSet.contains(forthValue)) {
+                        List<Integer> temp = Arrays.asList(nums[i], nums[j], nums[k],(int) forthValue);
+                        Collections.sort(temp);
+                        values.add(temp);
+                    }
+                    hashSet.add((long)nums[k]);
+                }
+            }
+        }
+        return new ArrayList<>(values);
+    }
+
     public static void main(String[] args) {
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;
@@ -1172,7 +1357,7 @@ public class ArrayQuestions {
 //        int[] a = getRandomArray(5,10,-10);
 
         int[] a = {
-                1, 2, 2, 1
+                1, 0, -1, 0, -2, 2
         };
 
 //        int[] b = getRandomArray(5);
@@ -1183,12 +1368,12 @@ public class ArrayQuestions {
 //        System.out.println("Total Array ANS : " + Arrays.toString(reArrangeElementBySign(a)));
 //        System.out.println("Total Array ANS : " + LeadersInAnArray(a));
 //        nextPermutation(a);
-        for (List<Integer> i : pascalTriangle(12)) {
+        for (List<Integer> i : fourSum(a, 0)) {
             System.out.println(i);
         }
     }
 
-    public static int[] getRandomArray(int n, int randVal,int origin) {
+    public static int[] getRandomArray(int n, int randVal, int origin) {
         int[] a = new int[n];
 
 
