@@ -1338,6 +1338,134 @@ public class ArrayQuestions {
         return new ArrayList<>(values);
     }
 
+    public static int[] xorQueries(int[] arr, int[][] queries) {
+        // int [] answer=new int[queries.length];
+        // for(int i=0;i<queries.length ;i++){
+        //     int xor=0;
+
+        //     for(int j=queries[i][0];j<=queries[i][1] ;j++){
+        //         xor^=arr[j];
+        //     }
+        //     answer[i]=xor;
+        // }
+        int [] answer=new int[queries.length];
+        int xor=0;
+        HashMap<Integer,Integer> map=new HashMap<>();
+        for(int i=0;i<arr.length ;i++){
+            xor^=arr[i];
+            map.put(i,xor);
+        }
+
+        for(int i=0;i<queries.length ;i++){
+            int lastVal=map.get(queries[i][1]);
+            int firstValueMin1=queries[i][0]-1;
+            if(firstValueMin1>-1){
+                int firstVal=map.get(firstValueMin1);
+                int xVal=lastVal^firstVal;
+                answer[i]=xVal;
+            }else{
+                answer[i]=lastVal;
+            }
+        }
+        return answer;
+    }
+    public static int subarraysWithSumK(int []a, int b) {
+        // O(nlog n) SC -> O(n)
+        int preSum=0,answer=0;
+        HashMap<Integer,Integer> preSumMap=new HashMap<>();
+        for(int i=0;i<a.length;i++){
+            preSum^=a[i];
+            if(preSum==b){
+                answer++;
+            }
+            int nVal=preSum ^ b;
+            if(preSumMap.containsKey(nVal)){
+                answer+=preSumMap.get(nVal);
+            }
+
+            preSumMap.put(preSum,preSumMap.getOrDefault(preSum,0)+1);
+
+
+        }
+        return answer;
+        // int longest=0,count=0;
+        // for(int i=0;i<a.length;i++){
+        //     int sum=0;
+        //     count=0;
+        //     for(int j=i;j<a.length;j++){
+        //         sum^=a[j];
+        //         if(sum==b){
+        //            longest++;
+        //            count=0;
+        //         }
+        //     }
+        // }
+        // return longest;
+    }
+
+    public static int[][] merge(int[][] arr) {
+
+//        (https://youtu.be/IexN60k62jo?si=2xszVuiS9g9KeQnW)
+        //TC -> O(nlog n) + O(2n) SC-> O(n)
+//        int n = arr.length; // size of the array
+//        //sort the given intervals:
+//        Arrays.sort(arr, new Comparator<int[]>() {
+//            public int compare(int[] a, int[] b) {
+//                return a[0] - b[0];
+//            }
+//        });
+//
+//        List<List<Integer>> ans = new ArrayList<>();
+//
+//
+//        for (int i = 0; i < n; i++) { // select an interval:
+//            int start = arr[i][0];
+//            int end = arr[i][1];
+//
+//            //Skip all the merged intervals:
+//            if (!ans.isEmpty() && end <= ans.get(ans.size() - 1).get(1)) {
+//                continue;
+//            }
+//
+//            //check the rest of the intervals:
+//            for (int j = i + 1; j < n; j++) {
+//                if (arr[j][0] <= end) {
+//                    end = Math.max(end, arr[j][1]);
+//                } else {
+//                    break;
+//                }
+//            }
+//            ans.add(Arrays.asList(start, end));
+//        }
+//        int[][] array = new int[ans.size()][2];
+//        for (int i = 0; i < ans.size(); i++) {
+//            for (int j = 0; j < 2; j++) {
+//                array[i][j] = ans.get(i).get(j);
+//            }
+//        }
+
+        Arrays.sort(arr, Comparator.comparingInt(a -> a[0]));
+        ArrayList<int[]> answer=new ArrayList<>();
+        answer.add(arr[0]);
+        for(int i = 1;i<arr.length;i++){
+            int []ans = answer.getLast();
+            if(ans[1]>=arr[i][0] && ans[1]<arr[i][1]){
+                ans[1]=arr[i][1];
+                answer.set(answer.size()-1,ans);
+            }else if(ans[1]<arr[i][0]){
+                answer.add(arr[i]);
+            }else if(ans[0]>arr[i][0]){
+                ans[0]=arr[i][0];
+            }
+        }
+
+        int[][] array = new int[answer.size()][2];
+        for (int i = 0; i < answer.size(); i++) {
+            array[i]=answer.get(i);
+        }
+
+        return array;
+    }
     public static void main(String[] args) {
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;
@@ -1356,8 +1484,12 @@ public class ArrayQuestions {
 //        moveZeroToEnd(a,n);
 //        int[] a = getRandomArray(5,10,-10);
 
-        int[] a = {
-                1, 0, -1, 0, -2, 2
+//        int[] a = {
+//                1, 0, -1, 0, -2, 2
+//        };
+        int[][] a = {
+                {1, 4},
+                {0, 4}
         };
 
 //        int[] b = getRandomArray(5);
@@ -1368,8 +1500,8 @@ public class ArrayQuestions {
 //        System.out.println("Total Array ANS : " + Arrays.toString(reArrangeElementBySign(a)));
 //        System.out.println("Total Array ANS : " + LeadersInAnArray(a));
 //        nextPermutation(a);
-        for (List<Integer> i : fourSum(a, 0)) {
-            System.out.println(i);
+        for (int [] i : merge(a)) {
+            System.out.println(Arrays.toString(i));
         }
     }
 
