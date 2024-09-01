@@ -1327,11 +1327,11 @@ public class ArrayQuestions {
                     sum += nums[k];
                     long forthValue = target - sum;
                     if (hashSet.contains(forthValue)) {
-                        List<Integer> temp = Arrays.asList(nums[i], nums[j], nums[k],(int) forthValue);
+                        List<Integer> temp = Arrays.asList(nums[i], nums[j], nums[k], (int) forthValue);
                         Collections.sort(temp);
                         values.add(temp);
                     }
-                    hashSet.add((long)nums[k]);
+                    hashSet.add((long) nums[k]);
                 }
             }
         }
@@ -1348,42 +1348,43 @@ public class ArrayQuestions {
         //     }
         //     answer[i]=xor;
         // }
-        int [] answer=new int[queries.length];
-        int xor=0;
-        HashMap<Integer,Integer> map=new HashMap<>();
-        for(int i=0;i<arr.length ;i++){
-            xor^=arr[i];
-            map.put(i,xor);
+        int[] answer = new int[queries.length];
+        int xor = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < arr.length; i++) {
+            xor ^= arr[i];
+            map.put(i, xor);
         }
 
-        for(int i=0;i<queries.length ;i++){
-            int lastVal=map.get(queries[i][1]);
-            int firstValueMin1=queries[i][0]-1;
-            if(firstValueMin1>-1){
-                int firstVal=map.get(firstValueMin1);
-                int xVal=lastVal^firstVal;
-                answer[i]=xVal;
-            }else{
-                answer[i]=lastVal;
+        for (int i = 0; i < queries.length; i++) {
+            int lastVal = map.get(queries[i][1]);
+            int firstValueMin1 = queries[i][0] - 1;
+            if (firstValueMin1 > -1) {
+                int firstVal = map.get(firstValueMin1);
+                int xVal = lastVal ^ firstVal;
+                answer[i] = xVal;
+            } else {
+                answer[i] = lastVal;
             }
         }
         return answer;
     }
-    public static int subarraysWithSumK(int []a, int b) {
+
+    public static int subarraysWithSumK(int[] a, int b) {
         // O(nlog n) SC -> O(n)
-        int preSum=0,answer=0;
-        HashMap<Integer,Integer> preSumMap=new HashMap<>();
-        for(int i=0;i<a.length;i++){
-            preSum^=a[i];
-            if(preSum==b){
+        int preSum = 0, answer = 0;
+        HashMap<Integer, Integer> preSumMap = new HashMap<>();
+        for (int i = 0; i < a.length; i++) {
+            preSum ^= a[i];
+            if (preSum == b) {
                 answer++;
             }
-            int nVal=preSum ^ b;
-            if(preSumMap.containsKey(nVal)){
-                answer+=preSumMap.get(nVal);
+            int nVal = preSum ^ b;
+            if (preSumMap.containsKey(nVal)) {
+                answer += preSumMap.get(nVal);
             }
 
-            preSumMap.put(preSum,preSumMap.getOrDefault(preSum,0)+1);
+            preSumMap.put(preSum, preSumMap.getOrDefault(preSum, 0) + 1);
 
 
         }
@@ -1445,26 +1446,181 @@ public class ArrayQuestions {
 //        }
 
         Arrays.sort(arr, Comparator.comparingInt(a -> a[0]));
-        ArrayList<int[]> answer=new ArrayList<>();
+        ArrayList<int[]> answer = new ArrayList<>();
         answer.add(arr[0]);
-        for(int i = 1;i<arr.length;i++){
-            int []ans = answer.getLast();
-            if(ans[1]>=arr[i][0] && ans[1]<arr[i][1]){
-                ans[1]=arr[i][1];
-                answer.set(answer.size()-1,ans);
-            }else if(ans[1]<arr[i][0]){
+        for (int i = 1; i < arr.length; i++) {
+            int[] ans = answer.getLast();
+            if (ans[1] >= arr[i][0] && ans[1] < arr[i][1]) {
+                ans[1] = arr[i][1];
+                answer.set(answer.size() - 1, ans);
+            } else if (ans[1] < arr[i][0]) {
                 answer.add(arr[i]);
-            }else if(ans[0]>arr[i][0]){
-                ans[0]=arr[i][0];
+            } else if (ans[0] > arr[i][0]) {
+                ans[0] = arr[i][0];
             }
         }
 
         int[][] array = new int[answer.size()][2];
         for (int i = 0; i < answer.size(); i++) {
-            array[i]=answer.get(i);
+            array[i] = answer.get(i);
         }
 
         return array;
+    }
+
+    public static int[] findMissingRepeatingNumbers(int[] a) {
+//        HashMap<Integer,Integer> map=new HashMap<>();
+//        int missing=0,max=0,repeating=0;
+//        for(int i : a){
+//            map.put(i, map.getOrDefault(i,0)+1);
+//            if(map.get(i)==2){
+//                repeating=i;
+//            }
+//            // if(!map.containsKey(i-1)){
+//            //     missing=i-1;
+//            // }
+//            max=Math.max(max, i);
+//        }
+//        for(int i=max;i>0;i--){
+//            if(!map.containsKey(i)){
+//                missing=i;
+//                break;
+//            }
+//        }
+//        if(missing==0){
+//            missing=max+1;
+//        }
+//        return new int[]{repeating,missing};
+
+        long n = a.length; // size of the array
+        // Find Sn and S2n:
+        long SN = (n * (n + 1)) / 2;
+        long S2N = (n * (n + 1) * (2 * n + 1)) / 6;
+
+        // Calculate S and S2:
+        long S = 0, S2 = 0;
+        for (int i = 0; i < n; i++) {
+            S += a[i];
+            S2 += (long) a[i] * (long) a[i];
+        }
+
+        //S-Sn = X-Y:
+        long val1 = S - SN;
+
+        // S2-S2n = X^2-Y^2:
+        long val2 = S2 - S2N;
+
+        //Find X+Y = (X^2-Y^2)/(X-Y):
+        val2 = val2 / val1;
+
+        //Find X and Y: X = ((X+Y)+(X-Y))/2 and Y = X-(X-Y),
+        // Here, X-Y = val1 and X+Y = val2:
+        long x = (val1 + val2) / 2;
+        long y = x - val1;
+
+        int[] ans = {(int) x, (int) y};
+        return ans;
+    }
+
+    public static int numberOfInversions(int[] a, int n) {
+        //TC-> O(nlog n) SC->O(n)
+        return mergeSort(a,0,n-1);
+    }
+
+    public static int mergeSort(int[] arr, int low, int high) {
+        int count=0;
+        if (low >= high) {
+            return count;
+        }
+
+        int mid = (low + high) / 2;
+        count+=mergeSort(arr, low, mid);
+        count+=mergeSort(arr, mid + 1, high);
+        count+=sortInversion(arr, low, mid, high);
+        return count;
+    }
+
+    private static int sortInversion(int[] arr, int low, int mid, int high) {
+        int i=low,j=mid+1;
+        int inversionAns=0;
+        ArrayList<Integer> temp = new ArrayList<>();
+        while (i<=mid && j<=high){
+            if(arr[i]>arr[j]){
+                inversionAns+=mid-i+1;
+                temp.add(arr[j]);
+                j++;
+            }else if(arr[i]<=arr[j]){
+                temp.add(arr[i]);
+                i++;
+            }
+        }
+        while (i <= mid) {
+            temp.add(arr[i]);
+            i++;
+        }
+        while (j <= high) {
+            temp.add(arr[j]);
+            j++;
+        }
+        for (int k = low; k <=high; k++) {
+            arr[k] = temp.get(k-low);
+        }
+        return inversionAns;
+    }
+    public static int team(int []skill, int n){
+        //TC -> O(2nlog n) SC -> O(n)
+        return mergeReversePairs(skill, 0, n-1);
+    }
+    public static int countPairs(int[] arr, int low, int mid, int high) {
+        int right = mid + 1;
+        int cnt = 0;
+        for (int i = low; i <= mid; i++) {
+            while (right <= high && arr[i] > 2 * arr[right]) right++;
+            cnt += (right - (mid + 1));
+        }
+        return cnt;
+    }
+    public static int mergeReversePairs(int[] arr, int low, int high) {
+        int count=0;
+        if (low >= high) {
+            return count;
+        }
+
+        int mid = (low + high) / 2;
+        count+=mergeReversePairs(arr, low, mid);
+        count+=mergeReversePairs(arr, mid + 1, high);
+        count += countPairs(arr, low, mid, high);
+        sortInversion(arr, low, mid, high);
+        return count;
+    }
+
+    public static int maxProduct(int[] nums) {
+//        int max=nums[0];
+//        for(int i=0;i<nums.length;i++){
+//            int ans=1;
+//            for(int j=i;j<nums.length;j++){
+//                ans*=nums[j];
+//                max=Math.max(ans,max);
+//            }
+//
+//        }
+//        return max;
+        // TC-> O(n) SC-> O(1)
+        int max=Integer.MIN_VALUE;
+        int prefix=1;
+        int sufix=1;
+        for(int i=0;i<nums.length;i++){
+            if(prefix==0){
+                prefix=1;
+            }
+            if(sufix==0){
+                sufix=1;
+            }
+            prefix*=nums[i];
+            sufix*=nums[nums.length-1-i];
+            max=Math.max(max,Math.max(prefix,sufix));
+        }
+        return max;
     }
     public static void main(String[] args) {
 //        for (int i = 0; i < n; i++) {
@@ -1500,9 +1656,7 @@ public class ArrayQuestions {
 //        System.out.println("Total Array ANS : " + Arrays.toString(reArrangeElementBySign(a)));
 //        System.out.println("Total Array ANS : " + LeadersInAnArray(a));
 //        nextPermutation(a);
-        for (int [] i : merge(a)) {
-            System.out.println(Arrays.toString(i));
-        }
+
     }
 
     public static int[] getRandomArray(int n, int randVal, int origin) {
