@@ -4,7 +4,8 @@ public class LinkListDataType {
     int val;
     LinkListDataType next;
     LinkListDataType previous;
-
+    public LinkListDataType() {
+    }
     public LinkListDataType(int val, LinkListDataType next) {
         this.val = val;
         this.next = next;
