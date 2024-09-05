@@ -1,5 +1,6 @@
 import leetCode.ListNode;
 
+import java.util.Random;
 import java.util.Stack;
 
 public class LinkListQuestion {
@@ -263,6 +264,7 @@ public class LinkListQuestion {
 
         return prev;
     }
+
     public LinkListDataType addTwoNumbers(LinkListDataType l1, LinkListDataType l2) {
         // TC-> O(max(l1,l2) SC->O(max(l1,l2)
         LinkListDataType a = new LinkListDataType();
@@ -291,6 +293,163 @@ public class LinkListQuestion {
 
 
     }
+
+    public static LinkListDataType oddEvenList(LinkListDataType head) {
+//        LinkListDataType temp=head.next;
+//        LinkListDataType prev=head;
+//        LinkListDataType odd=head;
+//        int index=1;
+//        while(temp!=null){
+//            index++;
+//            if((index%2)!=0){
+//                System.out.println(STR."\{prev.val} \{temp.val} \{index}");
+//                prev.next=temp.next;
+//                temp.next=prev;
+//                odd.next=temp;
+//                odd=temp;
+//            }
+//            prev=temp;
+//            temp=temp.next;
+//        }
+//        return head;
+        // TC -> O(n) SC-> O(1)
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        LinkListDataType odd = head;
+        LinkListDataType even = head.next;
+        LinkListDataType evenHead = even;
+
+        while (even != null && even.next != null) {
+            odd.next = odd.next.next;
+            odd = odd.next;
+
+            even.next = even.next.next;
+
+            even = even.next;
+        }
+        odd.next = evenHead;
+        return head;
+
+
+    }
+
+    public static LinkListDataType sortLLO12(LinkListDataType head){
+        if(head==null || head.next==null){
+            return head;
+        }
+        LinkListDataType temp=head;
+        LinkListDataType zeroHead=new LinkListDataType();
+        LinkListDataType oneHead=new LinkListDataType();
+        LinkListDataType twoHead=new LinkListDataType();
+        LinkListDataType zero=zeroHead;
+        LinkListDataType one = oneHead;
+        LinkListDataType two =twoHead;
+        while (temp!=null){
+            LinkListDataType val=temp.next;
+            if(temp.val==0){
+                zero.next=temp;
+
+                zero=temp;
+            }else if(temp.val==1){
+                one.next=temp;
+
+                one=temp;
+            }else{
+                two.next=temp;
+
+                two=temp;
+            }
+            temp=val;
+        }
+        zero.next=(oneHead.next!=null)?oneHead.next:twoHead.next;
+        one.next=twoHead.next;
+        two.next=null;
+        return zeroHead.next;
+    }
+    public LinkListDataType removeNthFromEnd(LinkListDataType head, int n) {
+
+        //TC -> O(len) + O(len-n) = O(2 * len)  SC->O(1)
+//        int l=lengthOfLength(head);
+//        if(n==1 && l==1){
+//            return null;
+//        }
+//        int prevIndex=l-n;
+//        LinkListDataType temp=head;
+//        int count =0;
+//        if(prevIndex==0){
+//            return temp.next;
+//        }
+//
+//        while(temp!=null){
+//            count++;
+//            if(count == prevIndex){
+//                System.out.println(count);
+//                temp.next=temp.next.next;
+//                return head;
+//            }
+//            temp=temp.next;
+//        }
+//        return head;
+
+        // TC -> O(len) sc->O(1)
+
+        if(head==null){
+            return null;
+        }
+        LinkListDataType fast=head;
+        LinkListDataType slow=head;
+        for(int i=1;i<=n;i++){
+            fast=fast.next;
+        }
+        if(fast==null){
+            return head.next;
+        }
+        while (fast.next!=null){
+            fast=fast.next;
+            slow=slow.next;
+        }
+        slow.next=slow.next.next;
+        return head;
+    }
+
+    public ListNode reverseList(ListNode head) {
+//        Stack<Integer> val = new Stack<>();
+//        ListNode temp=head;
+//        while(temp!=null){
+//            val.push(temp.val);
+//            temp=temp.next;
+//        }
+//        temp=head;
+//        while(temp!=null && !val.empty()){
+//            temp.val=val.pop();
+//            temp=temp.next;
+//        }
+//        return head;
+        // TC -> O(n) SC->O(1)
+//        ListNode temp=head;
+//        ListNode prev=null;
+//        while (temp!=null){
+//            ListNode front=temp.next;
+//            temp.next=prev;
+//            prev=temp;
+//            temp=front;
+//        }
+//        return prev;
+
+        if(head == null || head.next==null){
+            return head;
+        }
+
+        ListNode newHead = reverseList(head.next);
+        ListNode front=head.next;
+        front.next=head;
+        head.next=null;
+        return newHead;
+
+    }
+
     public static void showDoublyList(LinkListDataType head) {
         if (head == null) {
             return;
@@ -312,11 +471,12 @@ public class LinkListQuestion {
 
     public static void main() {
         LinkListDataType head = null;
-        for (int i = 0; i <= 10; i++) {
-            head = insertAtHeadDoublyLink(head, i);
+        Random random=new Random();
+        for (int i = 0; i <= 4; i++) {
+            head = insertAtHeadDoublyLink(head, random.nextInt(3));
         }
         showDoublyList(head);
-        head = reverseDll(head);
+        head = sortLLO12(head);
         showDoublyList(head);
 
     }
