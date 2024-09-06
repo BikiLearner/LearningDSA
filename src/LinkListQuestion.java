@@ -1,5 +1,6 @@
 import leetCode.ListNode;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Stack;
 
@@ -450,6 +451,324 @@ public class LinkListQuestion {
 
     }
 
+    public static boolean isPalindrome(ListNode head) {
+        //TC -> O(2n) SC->O(n)
+        Stack<Integer> rev=new Stack<>();
+        ListNode temp=head;
+        while(temp!=null){
+            rev.push(temp.val);
+            temp=temp.next;
+        }
+        temp=head;
+        while(temp!=null){
+            if(temp.val!=rev.peek()){
+                return false;
+            }
+            rev.pop();
+            temp=temp.next;
+        }
+        return true;
+
+    }
+    public static LinkListDataType addOneTwoList(LinkListDataType head){
+
+        //TC -> O(n) + O(n) + O(n+1) SC->O(1)
+//        LinkListDataType rev=reverseSinglyList(head);
+//        LinkListDataType temp=rev;
+//        LinkListDataType prev=null;
+//        int carry=1;
+//        while (temp!=null){
+//            prev=temp;
+//            int sum=carry + temp.val;
+//            carry= sum/10;
+//            temp.val=sum%10;
+//            temp=temp.next;
+//        }
+//        if(carry>0 && prev!=null){
+//            prev.next=new LinkListDataType(carry);
+//        }
+//        return reverseSinglyList(rev);
+        //TC -> O(n) sc->O(n)
+        int carry=addVal1(head);
+        System.out.println(carry);
+        if(carry>0){
+            LinkListDataType node=new LinkListDataType(carry);
+            node.next=head;
+            return node;
+        }
+        return head;
+    }
+    public static int addVal1(LinkListDataType head){
+        if(head==null){
+            return 1;
+        }
+        int carry = addVal1(head.next);
+        int sum = head.val+carry;
+        head.val=sum % 10 ;
+        carry=sum/10;
+        return carry;
+    }
+    public static LinkListDataType reverseSinglyList(LinkListDataType head){
+        if(head==null || head.next==null){
+            return head;
+        }
+        LinkListDataType newHead = reverseSinglyList(head.next);
+        LinkListDataType front=head.next;
+        front.next=head;
+        head.next=null;
+        return newHead;
+    }
+
+    public boolean hasCycle(ListNode head) {
+        // ListNode temp=head;
+        // HashMap<ListNode , Integer> map=new HashMap<>();
+
+        // while(temp!=null){
+        //     map.put(temp,map.getOrDefault(temp,0)+1);
+        //     if(map.get(temp)>1){
+        //         return true;
+        //     }
+        //     temp=temp.next;
+        // }
+        // return false;
+        //(https://youtu.be/wiOo4DC5GGA?si=bmj42XxeISp2ty3c)
+        if(head==null || head.next==null){
+            return false;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next;
+
+        while(fast!=null && fast.next!=null){
+            if(slow == fast){
+                return true;
+            }
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return false;
+    }
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        //TC -> O(n1 * n2) SC->O(n1);
+//        ListNode tempA=headA;
+//        HashMap<ListNode,ListNode> hashmap=new HashMap<>();
+//        while(tempA!=null){
+//            hashmap.put(tempA,tempA);
+//            tempA=tempA.next;
+//        }
+//        ListNode tempB=headB;
+//        while(tempB!=null){
+//            if(hashmap.containsKey(tempB)){
+//                return tempB;
+//            }
+//            tempB=tempB.next;
+//        }
+//        return null;
+        if(headA == null || headB==null) return null;
+        ListNode tempA=headA;
+        ListNode tempB=headB;
+
+        while(tempA!=tempB){
+            tempA=tempA.next;
+            tempB=tempB.next;
+
+            if(tempA==tempB){
+                return tempA;
+            }
+
+            if(tempA==null) tempA=headB;
+            if(tempB==null) tempB=headA;
+        }
+
+        return tempA;
+    }
+    public int lengthOfList(ListNode head){
+        ListNode temp=head;
+        int count = 0 ;
+        while(temp != null){
+            count++;
+            temp=temp.next;
+        }
+        return count;
+    }
+    public ListNode middleNode(ListNode head) {
+        // TC -> O(n + n/2) SC->O(1)
+//        int length=lengthOfList(head);
+//        if(length == 0 || length == 1){
+//            return head;
+//        }
+//        int mid= (length/2) + 1;
+//        ListNode temp=head;
+//        while(temp!=null){
+//            mid--;
+//            if(mid==0){
+//                break;
+//            }
+//
+//            temp=temp.next;
+//        }
+//        return temp;
+
+        //In tortoiseHare method you move slow 1 step and fast 2 step
+        // when fast reaches end mean fast == null the slow will point to the middle
+
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null && fast.next!=null ){
+            slow=slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+
+    }
+
+    public int countNodesinLoop(ListNode head) {
+        ListNode cycle=cycleNode(head);
+        if(cycle==null){
+            return 0;
+        }
+        ListNode temp=cycle.next;
+        int count = 0;
+        while(temp!=cycle){
+            count++;
+            temp=temp.next;
+        }
+        return (count+1);
+
+    }
+    public ListNode cycleNode(ListNode head){
+        if(head==null || head.next==null){
+            return null;
+        }
+
+        ListNode slow=head;
+        ListNode fast=head.next;
+
+        while(fast!=null && fast.next!=null){
+            if(slow == fast){
+                return slow;
+            }
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return null;
+    }
+
+    public static ListNode deleteMiddle(ListNode head) {
+
+        //TC -> O(n/2) SC->O(1)
+        if(head == null || head.next==null){
+            return null;
+        }
+        ListNode slowPrev=null;
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null && fast.next!=null){
+            slowPrev=slow;
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+
+        slowPrev.next=slow.next;
+        slow.next=null;
+        return head;
+    }
+    public static ListNode detectCycle(ListNode head) {
+        // TC -> O(n) SC->O(n)
+        if(head==null || head.next==null){
+            return null;
+        }
+//        HashMap<ListNode,Integer> map=new HashMap<>();
+//        ListNode temp=head;
+//        while(temp!=null){
+//            if(map.containsKey(temp)){
+//                return temp;
+//            }
+//            map.put(temp,1);
+//            temp=temp.next;
+//        }
+//        return null;
+        //(https://youtu.be/2Kd0KKmmHFc?si=nFNooSAHSPAWy7AO)
+        // TC-> O(
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            if(slow==fast) {
+                slow=head;
+                while(fast!=slow){
+                    slow=slow.next;
+                    fast=fast.next;
+                }
+                return slow;
+            }
+        }
+
+        return null;
+    }
+
+    public static ListNode sortList(ListNode head) {
+        if(head==null || head.next==null){
+            return head;
+        }
+        // TC -> O(log n *(n + n/2)) SC -> O(1)
+        ListNode middle=findMiddle(head);
+        ListNode left=head;
+        ListNode right = middle.next;
+        middle.next=null;
+        left=sortList(left);
+        right=sortList(right);
+        return mergeListAlgo(left , right);
+
+    }
+    public static ListNode findMiddle(ListNode head){
+        if(head==null || head.next==null){
+            return head;
+        }
+        ListNode slow=head;
+        ListNode fast=head.next;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+    public static ListNode mergeListAlgo(ListNode list1,ListNode list2){
+        ListNode tempR=list2;
+        ListNode tempL=list1;
+        ListNode head=null;
+        ListNode tail=null;
+        while (tempR!=null && tempL!=null){
+            if(tempL.val<=tempR.val){
+                head=addToList(head,tail,tempL);
+                tail=tempL;
+                tempL=tempL.next;
+            } else {
+                head=addToList(head,tail,tempR);
+                tail=tempR;
+                tempR=tempR.next;
+            }
+        }
+        while (tempR!=null){
+            head=addToList(head,tail,tempR);
+            tail=tempR;
+            tempR=tempR.next;
+        }
+        while (tempL!=null){
+            head=addToList(head,tail,tempL);
+            tail=tempL;
+            tempL=tempL.next;
+        }
+        return head;
+    }
+    public static ListNode addToList(ListNode head,ListNode tail,ListNode node){
+        if(head==null){
+            return node;
+        }
+        tail.next=node;
+        return head;
+    }
+
     public static void showDoublyList(LinkListDataType head) {
         if (head == null) {
             return;
@@ -473,10 +792,10 @@ public class LinkListQuestion {
         LinkListDataType head = null;
         Random random=new Random();
         for (int i = 0; i <= 4; i++) {
-            head = insertAtHeadDoublyLink(head, random.nextInt(3));
+            head = insertAtHeadDoublyLink(head, 9);
         }
         showDoublyList(head);
-        head = sortLLO12(head);
+        head = addOneTwoList(head);
         showDoublyList(head);
 
     }
