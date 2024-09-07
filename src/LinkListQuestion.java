@@ -1,5 +1,6 @@
 import leetCode.ListNode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Stack;
@@ -768,7 +769,129 @@ public class LinkListQuestion {
         tail.next=node;
         return head;
     }
+    public static LinkListDataType deleteAllOccurOfX(LinkListDataType head, int x) {
+        //TC -> O(n) SC-> O(1)
+        if(head==null){
+            return null;
+        }
+        LinkListDataType temp=head;
+        while(temp!=null){
+            if(temp.val==x){
+                if(temp==head){
+                    head=head.next;
+                }
+                LinkListDataType nextNode=temp.next;
+                LinkListDataType prevNode=temp.previous;
+                if(nextNode!=null) nextNode.previous=prevNode;
+                if(prevNode != null) prevNode.next=nextNode;
 
+                temp=nextNode;
+
+            }else{
+                temp=temp.next;
+            }
+
+        }
+        return head;
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next==null) return head;
+
+        ListNode dummy=new ListNode();
+        ListNode travDummy=dummy;
+
+        HashMap<Integer,Integer> map =new HashMap<>();
+        ListNode temp=head;
+        while(temp!=null){
+            map.put(temp.val,map.getOrDefault(temp.val,0)+1);
+            temp=temp.next;
+        }
+        temp=head;
+        while(temp!=null){
+            if(map.get(temp.val)==1){
+                travDummy.next=temp;
+                travDummy=travDummy.next;
+            }
+            temp=temp.next;
+        }
+        travDummy.next=null;
+        return dummy.next;
+    }
+
+    public static ArrayList<ArrayList<Integer>> findPairsWithGivenSum(int target,
+                                                                      LinkListDataType head) {
+//        HashMap<Integer,Boolean> map=new HashMap<>();
+        ArrayList<ArrayList<Integer>> list=new ArrayList<>();
+//        LinkListDataType temp=head;
+//        while(temp!=null){
+//            map.put(temp.val,false);
+//            temp=temp.next;
+//        }
+//
+//        temp=head;
+//        while(temp!=null){
+//            int mapKey=target-temp.val;
+//            if(map.containsKey(mapKey) && !map.get(mapKey) && temp.val!=mapKey){
+//                ArrayList<Integer> val=new ArrayList<>();
+//                val.add(temp.val);
+//                val.add(mapKey);
+//                map.put(mapKey,true);
+//                map.put(temp.val,true);
+//                list.add(val);
+//            }
+//            temp=temp.next;
+//        }
+//        return list;
+        // TC -> O(n + n) -> O(n)
+        LinkListDataType right=head;
+        while(right.next!=null){
+            right=right.next;
+        }
+        LinkListDataType left=head;
+        while(left.val < right.val){
+            int sum=left.val+right.val;
+            if(sum > target){
+                right=right.previous;
+            }else if(sum<target){
+                left=left.next;
+            }else{
+                ArrayList<Integer> val=new ArrayList<>();
+                val.add(left.val);
+                val.add(right.val);
+                left=left.next;
+                right=right.previous;
+                list.add(val);
+            }
+
+        }
+        return list;
+    }
+    LinkListDataType removeDuplicates(LinkListDataType head){
+        //TC -> O(n) SC-> O(1);
+        if(head == null || head.next==null) return head;
+
+        int dup=head.val;
+        LinkListDataType temp=head.next;
+
+        while(temp!=null){
+            if(temp.val==dup){
+                if(temp==head){
+                    head=head.next;
+                }
+                LinkListDataType nextNode=temp.next;
+                LinkListDataType prevNode=temp.previous;
+                if(nextNode!=null) nextNode.previous=prevNode;
+                if(prevNode != null) prevNode.next=nextNode;
+                temp=nextNode;
+
+            }else{
+                dup=temp.val;
+                temp=temp.next;
+            }
+        }
+        return head;
+    }
     public static void showDoublyList(LinkListDataType head) {
         if (head == null) {
             return;
