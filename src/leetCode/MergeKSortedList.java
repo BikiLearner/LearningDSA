@@ -1,6 +1,8 @@
 package leetCode;
 
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 public class MergeKSortedList {
@@ -22,12 +24,44 @@ public class MergeKSortedList {
     }
 
     public static ListNode mergeKLists(ListNode[] lists) {
-        ListNode listNodeVal = lists[0];
-        for(int i=1;i<lists.length;i++){
-             ListNode ls=lists[i];
-             listNodeVal=mergeListAlgoUpdated(listNodeVal,ls);
+//        ListNode listNodeVal = lists[0];
+//        for(int i=1;i<lists.length;i++){
+//             ListNode ls=lists[i];
+//             listNodeVal=mergeListAlgoUpdated(listNodeVal,ls);
+//        }
+//        return listNodeVal;
+//
+//        if (lists.length == 0) {
+//            return null;
+//        }
+        PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<ListNode>() {
+            public int compare(ListNode a, ListNode b) {
+                return a.val - b.val;
+            }
+        });
+
+
+        // ListNode listNodeVal = lists[0];
+
+        ListNode dummy=new ListNode();
+        ListNode tempdum=dummy;
+
+        for (ListNode list : lists) {
+            //ListNode ls = lists[i];
+            //listNodeVal = mergeListAlgo(listNodeVal, ls);
+            if (list != null) {
+                pq.add(list);
+            }
         }
-        return listNodeVal;
+
+        while(!pq.isEmpty()){
+            ListNode top = pq.peek();
+            tempdum.next=top;
+            pq.remove();
+            if(top.next!=null) pq.add(top.next);
+            tempdum=top;
+        }
+        return dummy.next;
     }
     public static ListNode mergeListAlgoUpdated(ListNode list1,ListNode list2){
         //Primary head

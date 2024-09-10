@@ -1622,6 +1622,13 @@ public class ArrayQuestions {
         }
         return max;
     }
+    public static int singleNonDuplicate(int[] nums) {
+        int xor = 0;
+        for(int i : nums){
+            xor^=i;
+        }
+        return xor;
+    }
     public static void main(String[] args) {
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;

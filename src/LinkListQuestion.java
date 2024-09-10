@@ -452,6 +452,87 @@ public class LinkListQuestion {
 
     }
 
+    public ListNode reverseKGroup(ListNode head, int k) {
+
+        // TC -> O(n + n) = O(n)  SC -> O(1)
+        ListNode temp = head;
+        ListNode prevNode=null;
+
+        while(temp!=null){
+            ListNode kNode=getKNode(temp,k);
+
+            if(kNode==null) break;
+
+            ListNode nextNode=kNode.next;
+            kNode.next=null;
+
+            reverseList(temp);
+            if(temp==head){
+                head=kNode;
+            }else{
+                prevNode.next=kNode;
+            }
+
+            prevNode=temp;
+            temp=nextNode;
+
+        }
+        if(prevNode !=null){
+            prevNode.next=temp;
+        }
+
+        return head;
+
+    }
+
+    public ListNode getKNode(ListNode head,int k){
+        int count = 0;
+        ListNode temp=head;
+        while(temp!=null){
+            count ++;
+            if(count == k){
+                return temp;
+            }
+            temp=temp.next;
+        }
+        return null;
+    }
+
+    public ListNode rotateRight(ListNode head, int k) {
+        // O(k + (n-k) + k) = O(n)
+        if(head==null || head.next==null) return head;
+        int kval= k % lengthOfList(head);
+        return stopAtCorrectNode(head,kval);
+    }
+    public ListNode stopAtCorrectNode(ListNode head,int k){
+
+        ListNode fast=head;
+        int count=0;
+        while(fast!=null){
+            count++;
+            if(count == k){
+                break;
+            }
+            fast=fast.next;
+        }
+        ListNode slow=head;
+        ListNode prev=null;
+        while(fast!=null && fast.next!=null){
+            prev=slow;
+            slow=slow.next;
+            fast=fast.next;
+        }
+
+        ListNode temp=slow;
+        if(slow==null || prev==null) return head;
+        while(temp.next!=null){
+            temp=temp.next;
+        }
+        temp.next=head;
+        prev.next=null;
+        return slow;
+    }
+
     public static boolean isPalindrome(ListNode head) {
         //TC -> O(2n) SC->O(n)
         Stack<Integer> rev=new Stack<>();
@@ -891,6 +972,83 @@ public class LinkListQuestion {
             }
         }
         return head;
+    }
+    public static ListNode flatten(ListNode root) {
+        if(root==null || root.next==null) return root;
+        ListNode temp=root.next;
+        ListNode headNode=root;
+        ArrayList<Integer> arr=new ArrayList<>();
+        while(temp!=null){
+            headNode = //mergeTwoLists(headNode,temp);
+                    // make merge sort for bottom or child
+            temp=temp.next;
+        }
+
+        return headNode;
+
+        //using recursion
+        //return mergeTwoLists(root,flatten(root.next));
+        // make merge sort for bottom or child
+    }
+
+    public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummy=new ListNode();
+        ListNode tempDummy=dummy;
+        ListNode temp1=list1;
+        ListNode temp2=list2;
+
+        while(temp1!=null && temp2!=null){
+            if(temp1.val<temp2.val){
+                tempDummy.next=temp1;
+                tempDummy=temp1;
+                temp1=temp1.next;
+            }else {
+                tempDummy.next=temp2;
+                tempDummy=temp2;
+                temp2=temp2.next;
+            }
+        }
+        if(temp1!=null){
+            tempDummy.next=temp1;
+        }
+        if(temp2!=null){
+            tempDummy.next=temp2;
+        }
+
+        return dummy.next;
+
+    }
+
+    public ListNode copyRandomList(ListNode head) {
+
+        //(https://youtu.be/q570bKdrnlw?si=7oMwS8__X2dJ2Vmo)
+        // O(n + n) SC-> O(n) + O(n) (require I cannot control)
+        //(https://leetcode.com/problems/copy-list-with-random-pointer/)
+        // the answer is here
+//        Node dummy=new Node(-1);
+//        Node tempD=dummy;
+//        Node temp=head;
+//        HashMap<Node,Node> map=new HashMap<>();
+//
+//        while(temp!=null){
+//            Node node= new Node(temp.val);
+//            tempD.next=node;
+//            tempD=node;
+//            map.put(temp,node);
+//            temp=temp.next;
+//        }
+//        temp=head;
+//        while(temp!=null){
+//            Node prevNode=map.get(temp);
+//            Node tempNext=map.get(temp.next);
+//            Node tempRandom=map.get(temp.random);
+//            prevNode.next=tempNext;
+//            prevNode.random=tempRandom;
+//            temp=temp.next;
+//        }
+//
+//        return dummy.next;
+        return null;
     }
     public static void showDoublyList(LinkListDataType head) {
         if (head == null) {
