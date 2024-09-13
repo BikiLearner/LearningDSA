@@ -1,0 +1,36 @@
+# Strings are the type of objects that can store the character of values and in Java,
+    every character is stored in 16 bits i,e using UTF 16-bit encoding
+
+# To make Java more memory efficient (because no new objects are created
+    if it exists already in the string constant pool).
+
+# CharBuffer is part of the java.nio package, and it allows the manipulation of character
+  buffers.It's primarily used to store and process sequences of characters
+  in a mutable form.
+
+# Classes that are implemented using the CharSequence interface are mentioned
+  below and these provides much of functionality like substring,
+  lastoccurence, first occurence, concatenate , toupper, tolower etc.
+    String
+    StringBuffer
+    StringBuilder
+
+# String : immutable mean one created cannot be change
+            The functionality like toUpper toLower etc return a new object
+            it does not modify the current object
+            It is thread safe
+
+# StringBuffer can be considered a peer class to String because both represent
+  sequences of characters. However, unlike String, StringBuffer is mutable,
+  meaning its content can be changed after creation.
+  StringBuffer is synchronized, meaning multiple threads can safely modify
+  the same StringBuffer object without corrupting the data.
+  All mutating methods in StringBuffer are synchronized, ensuring that only one
+  thread can modify the buffer at a time.
+  performance Issue due to thread safety.
+
+# StringBuilder in Java represents an alternative to String and StringBuffer Class,
+  as it creates a mutable sequence of characters and it is not thread safe.
+  It is used only within the thread , so there is no extra overhead ,
+  so it is mainly used for single threaded program.
+
