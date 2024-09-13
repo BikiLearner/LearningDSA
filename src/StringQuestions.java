@@ -131,6 +131,78 @@ public class StringQuestions {
 
         return result * sign;
     }
+
+    public List<String> letterCombinations(String digits) {
+        List<String> combinations = new ArrayList<>();
+        if(digits.isEmpty()) return combinations;
+
+        String arr[]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        backtrack("", digits, 0, combinations,arr);
+        return combinations;
+
+
+    }
+    private  void backtrack(String combination, String digits, int index, List<String> combinations,String [] phoneMap) {
+        if (index == digits.length()) {
+            combinations.add(combination);
+            return;
+        }
+
+        String letters = phoneMap[digits.charAt(index) - '0'];
+        if (letters != null) {
+            for (char letter : letters.toCharArray()) {
+                backtrack(combination + letter, digits, index + 1, combinations,phoneMap);
+            }
+        }
+    }
+
+    public boolean isAnagram(String s, String t) {
+        if(s.length() !=t.length()) return false;
+
+        HashMap<Character,Integer> map =new HashMap<>();
+        for(int i=0;i<t.length();i++){
+            char ch=t.charAt(i);
+            map.put(ch,map.getOrDefault(ch,0)+1);
+        }
+
+        for(int i=0;i<s.length();i++){
+            char ch=s.charAt(i);
+            if(map.containsKey(ch) && map.get(ch)!=0){
+                map.put(ch,map.get(ch)-1);
+            }else{
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean isIsomorphic(String s, String t) {
+        HashMap<Character,Character> mapSToT = new HashMap<>();
+        HashMap<Character,Character> mapTToS = new HashMap<>();
+
+
+        if(s.length() != t.length());
+
+        for(int i=0;i<s.length();i++){
+            char c1=s.charAt(i);
+            char c2=t.charAt(i);
+            if(mapSToT.containsKey(c1) && mapSToT.get(c1)!=c2){
+                return false;
+            }
+            else{
+                mapSToT.put(c1,c2);
+            }
+
+            if(mapTToS.containsKey(c2) && mapTToS.get(c2)!=c1){
+                return false;
+            }
+            else{
+
+                mapTToS.put(c2,c1);
+            }
+
+        }
+        return true;
+    }
     public static void main(String[] args) {
         String s = "()(()";
         System.out.println(longestValidParentheses(s));

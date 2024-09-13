@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="120eb772-df12-445d-80e5-a0002ef88e1c" name="Changes" comment="Pattern Commit">
-      <change afterPath="$PROJECT_DIR$/src/StringNotes" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RecursionCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RecursionCode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StringQuestions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringQuestions.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,35 +45,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ArrayQuestions.executor&quot;: &quot;Run&quot;,
-    &quot;Application.CombinationSumClass.executor&quot;: &quot;Run&quot;,
-    &quot;Application.HashingConcept.executor&quot;: &quot;Run&quot;,
-    &quot;Application.LinkListQuestion.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MergeKSortedList.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SortingLearning.executor&quot;: &quot;Run&quot;,
-    &quot;Application.StringQuestions.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ValidParanthesis.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/CollegeAssignment/day7&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;D:/Full ON Dsa/LearningDSA/src/Main.java&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ArrayQuestions.executor": "Run",
+    "Application.CombinationSumClass.executor": "Run",
+    "Application.HashingConcept.executor": "Run",
+    "Application.LinkListQuestion.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MergeKSortedList.executor": "Run",
+    "Application.RecursionCode.executor": "Run",
+    "Application.SortingLearning.executor": "Run",
+    "Application.StringQuestions.executor": "Run",
+    "Application.ValidParanthesis.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/CollegeAssignment/day7",
+    "onboarding.tips.debug.path": "D:/Full ON Dsa/LearningDSA/src/Main.java"
   }
-}</component>
-  <component name="RunManager" selected="Application.StringQuestions">
-    <configuration name="ArrayQuestions" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ArrayQuestions" />
-      <module name="LearningDSA" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+}]]></component>
+  <component name="RunManager" selected="Application.RecursionCode">
     <configuration name="LinkListQuestion" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="LinkListQuestion" />
       <module name="LearningDSA" />
@@ -90,6 +84,13 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RecursionCode" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="RecursionCode" />
+      <module name="LearningDSA" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -116,11 +117,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.RecursionCode" />
         <item itemvalue="Application.StringQuestions" />
         <item itemvalue="Application.LinkListQuestion" />
         <item itemvalue="Application.MergeKSortedList" />
         <item itemvalue="Application.ValidParanthesis" />
-        <item itemvalue="Application.ArrayQuestions" />
       </list>
     </recent_temporary>
   </component>
@@ -293,7 +294,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725983589948</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Pattern Commit">
+      <option name="closed" value="true" />
+      <created>1726222536312</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1726222536312</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
