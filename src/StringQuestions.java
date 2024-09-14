@@ -238,10 +238,10 @@ public class StringQuestions {
         for(int i=0;i<s.length();i++){
             for(int j=i+1;j<s.length()+1;j++){
                 String str=s.substring(i,j);
-                if(palindrom(str)>maxLen){
+                if(palindrome(str)>maxLen){
                     System.out.println(str);
                     ans=str;
-                    maxLen=palindrom(str);
+                    maxLen=palindrome(str);
                 }
             }
         }
@@ -249,7 +249,7 @@ public class StringQuestions {
 
 
     }
-    public int palindrom(String s){
+    public int palindrome(String s){
 
         int left=0,right=s.length()-1;
         while(left<=right){
