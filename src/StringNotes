@@ -92,6 +92,11 @@
     The string represents fixed-length, immutable character sequences
     while StringBuffer represents growable and writable character sequences.
 
+    All Implemented Interfaces of StringBuffer class: Serializable, Appendable, CharSequence.
+    public final class StringBuffer extends Object implements Serializable, CharSequence, Appendable.
+    It inherits some of the methods from the Object class which such as
+    clone(), equals(), finalize(), getClass(), hashCode(), notifies(), notifyAll().
+
     Important Constructors of StringBuffer class :
         StringBuffer(): creates an empty string buffer with an initial capacity of 16.
         StringBuffer(String str): creates a string buffer with the specified string.
@@ -100,7 +105,62 @@
     Methods :
     insert() (Insert at a given position) : sb.insert(index, StringToInsert);
     replace() (replaces the given string from the specified i and j-1) : sb.replace(i, j-1, String);
-    delete()
+    delete() (delete form index start to end-1 ) : sb.delete(1, 3);
+    reverse() (reverse String) : sb.reverse();
+    capacity() (Return the current capacity of Buffer
+                if a no of character increase from its current capacity then =  ((oldCapacity * 2)+2))
+                :sb.capacity()
+    length() : Returns the length of the string.
+    charAt()
+    deleteCharAt()
+    ensureCapacity() : Ensures capacity is at least equal to the given minimum.
+    replace()
+
+StringBuilder class (https://www.geeksforgeeks.org/stringbuilder-class-in-java-with-examples/?ref=next_article):
+    StringBuilder class provides no guarantee of synchronization
+    It is recommended to use were String will be used by single thread
+    It is not safe for use by multiple thread
+    String Builder is not thread-safe and high in performance compared to String buffer.
+
+    Constructors in Java StringBuilder Class :
+        StringBuilder()
+        StringBuilder(int capacity)
+        StringBuilder(CharSequence seq)
+        StringBuilder(String str)
+
+    Methods :
+     appendCodePoint(int codePoint) : Appends the string representation of the given Unicode code point to this sequence.
+     capacity() : Returns the current capacity of the StringBuilder.
+     charAt(int index) : Returns the character at the specified index.
+     chars() : Returns a stream of int values representing the char values in this sequence.
+     codePointAt(int index) : Returns the Unicode code point at the specified index.
+     codePointBefore(int index) : returns the Unicode code point before the specified index.
+     codePointCount(int beginIndex, int endIndex) : Returns the number of Unicode code points in the specified range.
+     codePoints() : Returns a stream of Unicode code point values from this sequence.
+     delete(int start, int end) : Removes the characters in a specified range from this sequence.
+     deleteCharAt(int index) : Removes the character at the specified index.
+     ensureCapacity(int minimumCapacity) : Ensures the capacity is at least the specified minimum.
+     getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin) : Copies characters from this sequence into a destination array.
+     indexOf() : Returns the index of the first occurrence of the specified substring.
+     insert(int offset, boolean b) : Inserts the string representation of the boolean value at the specified offset.
+     insert() : Inserts the string representation of a character at the specified position.
+     lastIndexOf() : Returns the index of the last occurrence of the specified substring.
+     length() :  Returns the length (number of characters) in this sequence.
+     offsetByCodePoints(int index, int codePointOffset) : Returns the index offset by a given number of code points from a specified index.
+     replace(int start, int end, String str) : Replaces characters in the specified range with the given string.
+     reverse() :  Reverses the sequence of characters in this StringBuilder.
+     setCharAt(int index, char ch) : Sets the character at the specified index to the given character.
+     setLength(int newLength) : Sets the length of the sequence to the specified value.
+     subSequence(int start, int end) : Returns a new character sequence that is a subsequence of this sequence.
+     substring() :  Returns a new string containing characters from a specified range.
+     toString() : Returns a string representing the current character sequence.
+     trimToSize() : Attempts to reduce storage used by the StringBuilder to its current length.
+
+# Difference between String, StringBuilder, and StringBuffer
+   (https://www.geeksforgeeks.org/string-vs-stringbuilder-vs-stringbuffer-in-java/?ref=next_article)
+
+# StringTokenizer Class
+
 
 
 
