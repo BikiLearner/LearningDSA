@@ -136,7 +136,7 @@ public class StringQuestions {
         List<String> combinations = new ArrayList<>();
         if(digits.isEmpty()) return combinations;
 
-        String arr[]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        String [] arr={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
         backtrack("", digits, 0, combinations,arr);
         return combinations;
 
@@ -175,6 +175,32 @@ public class StringQuestions {
         }
         return true;
     }
+    public static String reverseWords(String s) {
+        // s=s+' ';
+        // String word="";
+         String newStr="";
+        // for(int i=0;i<s.length();i++){
+        //     char ch=s.charAt(i);
+        //     if(ch==' '){
+        //         if(word.isEmpty()){
+        //             continue;
+        //         }
+        //         newStr=word + ' '+ newStr;
+        //         word="";
+        //         continue;
+        //     }
+        //     word+=ch;
+
+        // }
+        // return newStr.trim();
+        StringTokenizer stringTokenizer=new StringTokenizer(s);
+        while (stringTokenizer.hasMoreTokens()){
+            newStr=stringTokenizer.nextToken() +' '+ newStr;
+
+        }
+
+        return newStr;
+    }
     public boolean isIsomorphic(String s, String t) {
         HashMap<Character,Character> mapSToT = new HashMap<>();
         HashMap<Character,Character> mapTToS = new HashMap<>();
@@ -203,9 +229,69 @@ public class StringQuestions {
         }
         return true;
     }
+
+    public String longestPalindrome(String s) {
+        //(https://youtu.be/6i_T5kkfv4A?si=OTucUtaxQSBUPVXA)
+        if(s.length()<2) return s;
+        int maxLen=0;
+        String ans="";
+        for(int i=0;i<s.length();i++){
+            for(int j=i+1;j<s.length()+1;j++){
+                String str=s.substring(i,j);
+                if(palindrom(str)>maxLen){
+                    System.out.println(str);
+                    ans=str;
+                    maxLen=palindrom(str);
+                }
+            }
+        }
+        return ans;
+
+
+    }
+    public int palindrom(String s){
+
+        int left=0,right=s.length()-1;
+        while(left<=right){
+            if(s.charAt(left)!=s.charAt(right)){
+                return 0;
+            }
+            left++;
+            right--;
+        }
+        return s.length();
+    }
+
+    public boolean isValid(String s) {
+        if (s.length() == 1)
+            return false;
+
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            }
+            else if (c == ')' && !stack.isEmpty() && stack.peek() == '(') {
+                stack.pop();
+            }
+            else if (c == '}' && !stack.isEmpty() && stack.peek() == '{') {
+                stack.pop();
+            }
+            else if (c == ']' && !stack.isEmpty() && stack.peek() == '[') {
+                stack.pop();
+            }
+            else {
+                return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+
     public static void main(String[] args) {
-        String s = "()(()";
-        System.out.println(longestValidParentheses(s));
+        String s = "the sky is blue";
+//        System.out.println(longestValidParentheses(s));
+        System.out.println(reverseWords(s));
     }
 
 }

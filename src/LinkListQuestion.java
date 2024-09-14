@@ -1068,7 +1068,35 @@ public class LinkListQuestion {
 //        }
 //        System.out.println(temp.val);
     }
+    public ListNode swapPairs(ListNode head) {
+        if(head==null || head.next==null) return head;
+        // ListNode slow=head;
+        // ListNode fast=head.next;
+        // ListNode prev=null;
+        // while(fast!=null){
+        //     System.out.println(fast.val + " " + slow.val);
+        //     ListNode slowNext=slow.next.next;
+        //     ListNode fastNext=(fast.next!=null)?fast.next.next:null;
+        //     if(prev!=null){
+        //         prev.next=slow.next;
+        //     }
+        //     slow.next=fast.next;
+        //     fast.next=slow;
 
+        //     prev=slow;
+        //     if(slow==head){
+        //         head=fast;
+        //     }
+        //     slow=slowNext;
+        //     fast=fastNext;
+        // }
+        // return head;
+
+        ListNode newHead=head.next;
+        head.next=swapPairs(newHead.next);
+        newHead.next=head;
+        return newHead;
+    }
     public static void main() {
         LinkListDataType head = null;
         Random random=new Random();

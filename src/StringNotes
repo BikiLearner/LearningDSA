@@ -34,3 +34,73 @@
   It is used only within the thread , so there is no extra overhead ,
   so it is mainly used for single threaded program.
 
+# StringTokenizer class in Java is used to break a string into tokens.
+  A StringTokenizer object in Java tokenizes a string by breaking it into smaller
+  parts, called tokens, based on delimiters (e.g., spaces, commas).
+
+# StringJoiner class in Java is a convenient utility for building a sequence of strings with delimiters,
+  and optionally, a prefix and suffix. It simplifies the process compared to manually managing a
+  delimiter using StringBuilder.
+
+# If the string does not exist, then a new string instance is created and placed in a pool.
+  If the string exists, then it will not create a new object. Rather, it will return the reference
+  to the same instance. The cache that stores these string instances is known as the String Constant
+  pool or String Pool.
+
+  JDK 6 String pool was located inside PermGen(Permanent Generation) space.
+  But in JDK 7 it is moved to the main heap area.
+
+# if you want to store a dynamically created string to sting pool you can call intern() function
+    ex: String d=new String("Bik");
+        String demo=d.intern(); // this will then get inside string constant pool
+
+# Why did the String pool move from PermGen to the normal heap area?
+    PermGen space is limited, the default size is just 64 MB. it was a problem with creating and
+    storing too many string objects in PermGen space. That’s why the String pool was moved to a
+    larger heap area. To make Java more memory efficient
+# String Class(https://www.geeksforgeeks.org/string-class-in-java/?ref=next_article);
+
+# StringBuffer s_buffer = new StringBuffer("Geeks");
+# StringBuilder s_builder = new StringBuilder("Geeks");
+
+# String Methods :
+    str.length();
+    str.charAt(3);
+    str.substring(3);Return the substring from the ith  index character to end.
+    str.substring(2, 5); Returns the substring from i to j-1 index.
+    String output = s1.concat(s2); // concat two string
+    s.indexOf(“Share”); Return first Occurrence if not present return -1 ;
+    s.indexOf("ea",3);starting at the specified index. like index 3 it start search form index 3
+    s.lastIndexOf("a");
+    s1.equals(s2); // check equals
+    s1.equalsIgnoreCase(s2); // ignore the case when checking
+    s1.compareTo(s2); out < 0  // s1 comes before s2
+                       out = 0  // s1 and s2 are equal.
+                       out > 0   // s1 comes after s2.
+    s1.compareToIgnoreCase(s2); same but ignore case
+    word1.toLowerCase(); //make every character small letter
+    word1.toUpperCase(); //make every character capital letter
+    word1.trim(); remove leading and trailing white space
+    str.replace(‘f’ ,’g’); replace character to another character
+    s1.contains(s2) check the s2 is present in s1 or not
+    s1.toCharArray(); change the string to character array
+    s1.startsWith(s2) Return true if string starts with this prefix.
+
+# StringBuffer class (https://www.geeksforgeeks.org/stringbuffer-class-in-java/?ref=next_article)
+    if you need to perform multiple modifications to a string, using StringBuffer can be more
+    efficient than regular String objects
+    The string represents fixed-length, immutable character sequences
+    while StringBuffer represents growable and writable character sequences.
+
+    Important Constructors of StringBuffer class :
+        StringBuffer(): creates an empty string buffer with an initial capacity of 16.
+        StringBuffer(String str): creates a string buffer with the specified string.
+        StringBuffer(int capacity): creates an empty string buffer with the specified capacity as length.
+
+    Methods :
+    insert() (Insert at a given position) : sb.insert(index, StringToInsert);
+    replace() (replaces the given string from the specified i and j-1) : sb.replace(i, j-1, String);
+    delete()
+
+
+
