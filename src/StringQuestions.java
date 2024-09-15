@@ -287,7 +287,87 @@ public class StringQuestions {
         }
         return stack.isEmpty();
     }
+    public List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> answer = new ArrayList<>();
+        if (s == null || s.isEmpty() || words == null || words.length == 0) {
+            return answer;
+        }
 
+
+        // HashMap<String,Integer> map =new HashMap<>();
+        // HashMap<String,Integer> mapDup =  new HashMap<>();
+        // for(String val : words){
+        //     mapDup.put(val,mapDup.getOrDefault(val,0)+1);
+        // }
+
+        // int lengthOfWord = words[0].length();
+        // int lengthOfSubString = lengthOfWord * words.length;
+
+
+        int wordLength = words[0].length();
+        int numWords = words.length;
+        int totalLength = wordLength * numWords;
+
+        // Create a frequency map for the words
+        HashMap<String, Integer> wordCount = new HashMap<>();
+        for (String word : words) {
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+        }
+        // for(int i=0;i<s.length();i++){
+        //     int j=i;
+        //     int flag=0;
+        //     map.putAll(mapDup);
+        //     String str=(j<lengthOfWord+j && lengthOfWord+j <= s.length())?s.substring(j,lengthOfWord+j):"123";
+        //     while(map.containsKey(str) && map.get(str)!= 0) {
+        //        map.put(str,map.get(str)-1);
+        //        j+=lengthOfWord;
+        //        flag++;
+        //        str= (j<lengthOfWord+j && lengthOfWord+j <= s.length())?s.substring(j,lengthOfWord+j):"123";
+        //     }
+        //     if(flag==words.length){
+        //         answer.add(i);
+        //     }
+        // }
+        // return answer;
+
+        for (int i = 0; i < wordLength; i++) {
+            int left = i;
+            int right = i;
+            HashMap<String, Integer> currentCount = new HashMap<>();
+            int count = 0;
+
+            while (right + wordLength <= s.length()) {
+                // Get the current word from the string
+                String word = s.substring(right, right + wordLength);
+                right += wordLength;
+
+                if (wordCount.containsKey(word)) {
+                    currentCount.put(word, currentCount.getOrDefault(word, 0) + 1);
+                    count++;
+
+                    // If we have more of the word than required, move the left pointer
+                    while (currentCount.get(word) > wordCount.get(word)) {
+                        String leftWord = s.substring(left, left + wordLength);
+                        currentCount.put(leftWord, currentCount.get(leftWord) - 1);
+                        count--;
+                        left += wordLength;
+                    }
+
+                    // Check if the current window contains all the words
+                    if (count == numWords) {
+                        answer.add(left);
+                    }
+                } else {
+                    // If the word is not in the list, reset everything
+                    currentCount.clear();
+                    count = 0;
+                    left = right;
+                }
+            }
+        }
+
+        return answer;
+    }
     public static void main(String[] args) {
         String s = "the sky is blue";
 
