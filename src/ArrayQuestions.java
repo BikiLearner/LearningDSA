@@ -1629,6 +1629,106 @@ public class ArrayQuestions {
         }
         return xor;
     }
+
+    public static void isPrime(int []nums,int n){
+        // o is true 1 false
+        //(https://www.youtube.com/watch?v=g5Fuxn_AvSk)
+        nums[0]=1;
+        nums[1]=1;
+        for(int i = 2 ;i*i<n ;i++){
+            if(nums[i]==0){
+                //tc -> nlog (log n)
+                for(int j = i * i ; j<=n;j+=i){
+                    nums[j]=1;
+                }
+            }
+        }
+    }
+
+    public List<List<Integer>> findPrimePairs(int n) {
+        // TreeMap<Integer,Integer> map = new TreeMap<>();
+        List<List<Integer>> list=new ArrayList<>();
+        // int index=0;
+        // for(int i = 1;i<=n;i++){
+        //     if(isPrime(i)){
+        //         map.put(i,1);
+        //     }
+        // }
+        // map.forEach((key,val)->{
+        //     int sum = n - key;
+        //     if(map.containsKey(sum) && map.get(key)!=0){
+        //         List<Integer> l=new ArrayList<>();
+        //         l.add(key);
+        //         l.add(sum);
+        //         list.add(l);
+        //         map.put(sum,0);
+        //         map.put(key,0);
+        //     }
+        // });
+        //O(n) + O(n) sc->O(n)+O(answer.length)
+        int [] primeAndTaken = new int[n+1];
+        isPrime(primeAndTaken,n);
+        for(int i=1;i<=n;i++){
+            if(primeAndTaken[i]==1) continue;
+            int sum=n-i;
+            if(sum<=n && primeAndTaken[sum]!=1){
+                List<Integer> l=new ArrayList<>();
+                l.add(i);
+                l.add(sum);
+                list.add(l);
+                primeAndTaken[i]=1;
+                primeAndTaken[sum]=1;
+            }
+        }
+
+        return list;
+    }
+
+    public static StringBuilder binary(int n){
+        StringBuilder str= new StringBuilder();
+        while (n!=0){
+            int bit = n % 2;
+            str.insert(0,bit);
+            n/=2;
+        }
+        return str;
+    }
+    public static int ChangeBit(int n){
+        StringBuilder bits=binary(n);
+        StringBuilder newBits=new StringBuilder();
+        System.out.println(bits);
+        for(int i =0;i<bits.length();i++){
+            newBits.insert(i,(bits.charAt(i)=='0')?'1':'0');
+        }
+        System.out.println(newBits);
+        return decimal(newBits);
+    }
+    public static int decimal(StringBuilder bits){
+        int length=bits.length();
+        int sum=0;
+        int pC=1;
+        if(bits.charAt(length-1)=='1'){
+            sum=1;
+        }
+        for(int i=length-2;i>=0;i--){
+            pC*= 2;
+            if(bits.charAt(i)=='1'){
+                sum+=pC;
+            }
+        }
+        return sum;
+    }
+    public static void priorityVal(int [] n){
+        if(n.length==0) return;
+        int max=n[0];
+        System.out.println(max);
+        for (int i=1;i<n.length;i++){
+            if(n[i]>max){
+                max=n[i];
+                System.out.println(max);
+            }
+        }
+    }
     public static void main(String[] args) {
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;
@@ -1645,15 +1745,15 @@ public class ArrayQuestions {
 //        }
 
 //        moveZeroToEnd(a,n);
-//        int[] a = getRandomArray(5,10,-10);
+        int[] a = getRandomArray(5,10,1);
 
 //        int[] a = {
 //                1, 0, -1, 0, -2, 2
 //        };
-        int[][] a = {
-                {1, 4},
-                {0, 4}
-        };
+//        int[][] a = {
+//                {1, 4},
+//                {0, 4}
+//        };
 
 //        int[] b = getRandomArray(5);
 //        Arrays.sort(a);
@@ -1663,6 +1763,7 @@ public class ArrayQuestions {
 //        System.out.println("Total Array ANS : " + Arrays.toString(reArrangeElementBySign(a)));
 //        System.out.println("Total Array ANS : " + LeadersInAnArray(a));
 //        nextPermutation(a);
+        priorityVal(a);
 
     }
 
