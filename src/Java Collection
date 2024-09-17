@@ -1,0 +1,53 @@
+# What is a Framework in Java?(https://www.geeksforgeeks.org/collections-in-java-2/)
+    A framework is a set of classes and interfaces which provide a ready-made architecture.
+
+# Methods of the Collection Interface
+    add(Object) : This method is used to add an object to the collection.
+    addAll(Collection c) : This method adds all the elements in the given collection to this collection.
+    clear() : This method removes all of the elements from this collection.
+    contains(Object o) : This method returns true if the collection contains the specified element.
+    containsAll(Collection c):This method returns true if the collection contains all of the elements
+                               in the given collection.
+    equals(Object o) : This method compares the specified object with this collection for equality.
+    hashCode() : This method is used to return the hash code value for this collection.
+    isEmpty() : This method returns true if this collection contains no elements.
+    iterator() : This method returns an iterator over the elements in this collection.
+    max() : This method is used to return the maximum value present in the collection.
+    parallelStream() : This method returns a parallel Stream with this collection as its source.
+    remove(Object o) : This method is used to remove the given object from the collection.If there
+                       are duplicate values, then this method removes the first occurrence of the object.
+    removeAll(Collection c)	: This method is used to remove all the objects mentioned in the given
+                            collection from the collection.
+    removeIf(Predicate filter) : This method is used to remove all the elements of
+                                 this collection that satisfy the given predicate.
+    retainAll(Collection c)	: This method is used to retain only the elements in this
+                              collection that are contained in the specified collection.
+    size() : This method is used to return the number of elements in the collection.
+    spliterator() : This method is used to create a Spliterator over the elements in this collection.
+    stream() : This method is used to return a sequential Stream with this collection as its source.
+    toArray() : This method is used to return an array containing all of the elements in this collection.
+
+# Iterable Interface it is the root interface for the entire collection framework
+    The main functionality of this interface is to provide an iterator for the collections.
+# Collection Interface : This interface extends the iterable interface and is implemented by all the classes
+         in the collection framework. This interface contains all the basic methods which every
+         collection has like adding the data into the collection, removing the data, clearing the data, etc.
+
+# List Interface : This is a child interface of the collection interface.
+                    This list interface is implemented by various classes like ArrayList, Vector, Stack, etc.
+# ArrayList : ArrayList provides us with dynamic arrays in Java.
+
+# LinkedList : The LinkedList class is an implementation of the LinkedList data structure
+               which is a linear data structure where the elements are not stored in contiguous
+               locations and every element is a separate object with a data part and address part.
+
+# linkList vs ArrayList (https://www.javatpoint.com/difference-between-arraylist-and-linkedlist)
+# Vector : A vector provides us with dynamic arrays in Java. it may be slower than standard arrays
+           but can be helpful in programs where lots of manipulation in the array is needed
+           Vector is synchronized and an ArrayList is non-synchronized.
+# Stack class : models and implements the Stack data structure. The class is based on the basic
+                principle of last-in-first-out. In addition to the basic push and pop operations,
+                the class provides three more functions empty, search, and peek.
+                The class can also be referred to as the subclass of Vector
+
+

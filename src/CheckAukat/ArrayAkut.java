@@ -1,9 +1,6 @@
 package CheckAukat;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ArrayAkut {
     public static int[] reverseArray(int [] arr){
@@ -29,5 +26,11 @@ public class ArrayAkut {
     public static void main(String [] args){
         int []a ={1,2,3,4,5};
         System.out.println(Arrays.toString(reverseArray(a)));
+        Set<Integer> set=new HashSet<>();
+        for (int i : a) {
+            set.add(i);
+        }
+
+
     }
 }

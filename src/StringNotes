@@ -159,8 +159,31 @@ StringBuilder class (https://www.geeksforgeeks.org/stringbuilder-class-in-java-w
 # Difference between String, StringBuilder, and StringBuffer
    (https://www.geeksforgeeks.org/string-vs-stringbuilder-vs-stringbuffer-in-java/?ref=next_article)
 
-# StringTokenizer Class
+# StringTokenizer Class (https://www.geeksforgeeks.org/stringtokenizer-class-in-java/?ref=next_article)
+    A StringTokenizer is a class or function used to break a string into smaller components,
+    known as tokens. A token is typically a substring that is separated by specific delimiters
+    (e.g., spaces, commas, or other characters).
+    Tokenization is the first step in the parsing process. In compilers and interpreters,
+    this step is often called lexical analysis or scanning
 
+    Constructors of StringToken :
+        StringTokenizer(String str) : Default delimiters like newline, space, tab, carriage return, and form feed.
+        StringTokenizer(String str, String delimiters) : delimiters is a set of delimiters that are used to
+                                                         tokenize the given string.
+        StringTokenizer(String str, String delimiters, boolean flag) : The first two parameters have the
+                                                                        same meaning wherein The flag serves the following purpose.
+        If the flag is false, delimiter characters serve to separate tokens
+        If the flag is true, delimiter characters are considered to be tokens.
 
+    Methods Of StringTokenizer Class :
+        countTokens() : Returns the total number of tokens present
+        hasMoreTokens() : Tests if tokens are present for the StringTokenizer’s string
+        nextElement() : Returns an Object rather than String
+        hasMoreElements() : Returns the same value as hasMoreToken
+            This method returns the same value as hasMoreToken.
+            It exists so that the class can implement the Enumeration interface.
+        nextToken() : Returns the next token from the given StringTokenizer.
+
+# StringJoiner Class in Java (https://www.geeksforgeeks.org/stringjoiner-class-in-java/?ref=next_articlev)
 
 
