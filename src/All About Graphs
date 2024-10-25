@@ -1,0 +1,24 @@
+Type Of graph
+    Directed : All the edges are directed
+    UnDirected : All the edges are not directed
+
+Cycle : start from a node and end at that node
+
+Cyclic graph : graph with cycle
+Acyclic Graph : graph with no cycle
+
+Path : contain a lot of nodes and each of them are reachable
+        A node cannot appear twice in a path
+
+Degree of graph :
+    Undirected graph : no of edges go inside or outside of that node
+        Total degree = 2 * no of edges evey edges is associate with two nodes
+    Directed Graph :
+        In-degree : no of incoming edges
+        Out-degree : no of outgoing edges
+
+Edges weight : if the weight is not given the we will assume unit weight (1)
+
+Adjacency Matrix : to store graph
+
+

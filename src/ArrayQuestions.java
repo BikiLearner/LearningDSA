@@ -1524,32 +1524,32 @@ public class ArrayQuestions {
 
     public static int numberOfInversions(int[] a, int n) {
         //TC-> O(nlog n) SC->O(n)
-        return mergeSort(a,0,n-1);
+        return mergeSort(a, 0, n - 1);
     }
 
     public static int mergeSort(int[] arr, int low, int high) {
-        int count=0;
+        int count = 0;
         if (low >= high) {
             return count;
         }
 
         int mid = (low + high) / 2;
-        count+=mergeSort(arr, low, mid);
-        count+=mergeSort(arr, mid + 1, high);
-        count+=sortInversion(arr, low, mid, high);
+        count += mergeSort(arr, low, mid);
+        count += mergeSort(arr, mid + 1, high);
+        count += sortInversion(arr, low, mid, high);
         return count;
     }
 
     private static int sortInversion(int[] arr, int low, int mid, int high) {
-        int i=low,j=mid+1;
-        int inversionAns=0;
+        int i = low, j = mid + 1;
+        int inversionAns = 0;
         ArrayList<Integer> temp = new ArrayList<>();
-        while (i<=mid && j<=high){
-            if(arr[i]>arr[j]){
-                inversionAns+=mid-i+1;
+        while (i <= mid && j <= high) {
+            if (arr[i] > arr[j]) {
+                inversionAns += mid - i + 1;
                 temp.add(arr[j]);
                 j++;
-            }else if(arr[i]<=arr[j]){
+            } else if (arr[i] <= arr[j]) {
                 temp.add(arr[i]);
                 i++;
             }
@@ -1562,15 +1562,17 @@ public class ArrayQuestions {
             temp.add(arr[j]);
             j++;
         }
-        for (int k = low; k <=high; k++) {
-            arr[k] = temp.get(k-low);
+        for (int k = low; k <= high; k++) {
+            arr[k] = temp.get(k - low);
         }
         return inversionAns;
     }
-    public static int team(int []skill, int n){
+
+    public static int team(int[] skill, int n) {
         //TC -> O(2nlog n) SC -> O(n)
-        return mergeReversePairs(skill, 0, n-1);
+        return mergeReversePairs(skill, 0, n - 1);
     }
+
     public static int countPairs(int[] arr, int low, int mid, int high) {
         int right = mid + 1;
         int cnt = 0;
@@ -1580,15 +1582,16 @@ public class ArrayQuestions {
         }
         return cnt;
     }
+
     public static int mergeReversePairs(int[] arr, int low, int high) {
-        int count=0;
+        int count = 0;
         if (low >= high) {
             return count;
         }
 
         int mid = (low + high) / 2;
-        count+=mergeReversePairs(arr, low, mid);
-        count+=mergeReversePairs(arr, mid + 1, high);
+        count += mergeReversePairs(arr, low, mid);
+        count += mergeReversePairs(arr, mid + 1, high);
         count += countPairs(arr, low, mid, high);
         sortInversion(arr, low, mid, high);
         return count;
@@ -1606,40 +1609,41 @@ public class ArrayQuestions {
 //        }
 //        return max;
         // TC-> O(n) SC-> O(1)
-        int max=Integer.MIN_VALUE;
-        int prefix=1;
-        int sufix=1;
-        for(int i=0;i<nums.length;i++){
-            if(prefix==0){
-                prefix=1;
+        int max = Integer.MIN_VALUE;
+        int prefix = 1;
+        int sufix = 1;
+        for (int i = 0; i < nums.length; i++) {
+            if (prefix == 0) {
+                prefix = 1;
             }
-            if(sufix==0){
-                sufix=1;
+            if (sufix == 0) {
+                sufix = 1;
             }
-            prefix*=nums[i];
-            sufix*=nums[nums.length-1-i];
-            max=Math.max(max,Math.max(prefix,sufix));
+            prefix *= nums[i];
+            sufix *= nums[nums.length - 1 - i];
+            max = Math.max(max, Math.max(prefix, sufix));
         }
         return max;
     }
+
     public static int singleNonDuplicate(int[] nums) {
         int xor = 0;
-        for(int i : nums){
-            xor^=i;
+        for (int i : nums) {
+            xor ^= i;
         }
         return xor;
     }
 
-    public static void isPrime(int []nums,int n){
+    public static void isPrime(int[] nums, int n) {
         // o is true 1 false
         //(https://www.youtube.com/watch?v=g5Fuxn_AvSk)
-        nums[0]=1;
-        nums[1]=1;
-        for(int i = 2 ;i*i<n ;i++){
-            if(nums[i]==0){
+        nums[0] = 1;
+        nums[1] = 1;
+        for (int i = 2; i * i < n; i++) {
+            if (nums[i] == 0) {
                 //tc -> nlog (log n)
-                for(int j = i * i ; j<=n;j+=i){
-                    nums[j]=1;
+                for (int j = i * i; j <= n; j += i) {
+                    nums[j] = 1;
                 }
             }
         }
@@ -1647,7 +1651,7 @@ public class ArrayQuestions {
 
     public List<List<Integer>> findPrimePairs(int n) {
         // TreeMap<Integer,Integer> map = new TreeMap<>();
-        List<List<Integer>> list=new ArrayList<>();
+        List<List<Integer>> list = new ArrayList<>();
         // int index=0;
         // for(int i = 1;i<=n;i++){
         //     if(isPrime(i)){
@@ -1666,70 +1670,167 @@ public class ArrayQuestions {
         //     }
         // });
         //O(n) + O(n) sc->O(n)+O(answer.length)
-        int [] primeAndTaken = new int[n+1];
-        isPrime(primeAndTaken,n);
-        for(int i=1;i<=n;i++){
-            if(primeAndTaken[i]==1) continue;
-            int sum=n-i;
-            if(sum<=n && primeAndTaken[sum]!=1){
-                List<Integer> l=new ArrayList<>();
+        int[] primeAndTaken = new int[n + 1];
+        isPrime(primeAndTaken, n);
+        for (int i = 1; i <= n; i++) {
+            if (primeAndTaken[i] == 1) continue;
+            int sum = n - i;
+            if (sum <= n && primeAndTaken[sum] != 1) {
+                List<Integer> l = new ArrayList<>();
                 l.add(i);
                 l.add(sum);
                 list.add(l);
-                primeAndTaken[i]=1;
-                primeAndTaken[sum]=1;
+                primeAndTaken[i] = 1;
+                primeAndTaken[sum] = 1;
             }
         }
 
         return list;
     }
 
-    public static StringBuilder binary(int n){
-        StringBuilder str= new StringBuilder();
-        while (n!=0){
+    public static StringBuilder binary(int n) {
+        StringBuilder str = new StringBuilder();
+        while (n != 0) {
             int bit = n % 2;
-            str.insert(0,bit);
-            n/=2;
+            str.insert(0, bit);
+            n /= 2;
         }
         return str;
     }
-    public static int ChangeBit(int n){
-        StringBuilder bits=binary(n);
-        StringBuilder newBits=new StringBuilder();
+
+    public static int ChangeBit(int n) {
+        StringBuilder bits = binary(n);
+        StringBuilder newBits = new StringBuilder();
         System.out.println(bits);
-        for(int i =0;i<bits.length();i++){
-            newBits.insert(i,(bits.charAt(i)=='0')?'1':'0');
+        for (int i = 0; i < bits.length(); i++) {
+            newBits.insert(i, (bits.charAt(i) == '0') ? '1' : '0');
         }
         System.out.println(newBits);
         return decimal(newBits);
     }
-    public static int decimal(StringBuilder bits){
-        int length=bits.length();
-        int sum=0;
-        int pC=1;
-        if(bits.charAt(length-1)=='1'){
-            sum=1;
+
+    public static int decimal(StringBuilder bits) {
+        int length = bits.length();
+        int sum = 0;
+        int pC = 1;
+        if (bits.charAt(length - 1) == '1') {
+            sum = 1;
         }
-        for(int i=length-2;i>=0;i--){
-            pC*= 2;
-            if(bits.charAt(i)=='1'){
-                sum+=pC;
+        for (int i = length - 2; i >= 0; i--) {
+            pC *= 2;
+            if (bits.charAt(i) == '1') {
+                sum += pC;
             }
         }
         return sum;
     }
-    public static void priorityVal(int [] n){
-        if(n.length==0) return;
-        int max=n[0];
+
+    public static void priorityVal(int[] n) {
+        if (n.length == 0) return;
+        int max = n[0];
         System.out.println(max);
-        for (int i=1;i<n.length;i++){
-            if(n[i]>max){
-                max=n[i];
+        for (int i = 1; i < n.length; i++) {
+            if (n[i] > max) {
+                max = n[i];
                 System.out.println(max);
             }
         }
     }
-    public static void main(String[] args) {
+
+    public static int findFloor(long arr[], int n, long x) {
+        int left = 0, right = arr.length - 1;
+        int ans = -1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (arr[mid] == x) return mid;
+            else if (arr[mid] < x) {
+                ans = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return ans;
+    }
+
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            System.out.println(nums[mid]);
+            if (nums[mid] == target) return mid;
+            else if (nums[left] <= nums[mid]) {
+                if (nums[left] <= target && target <= nums[mid]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } else {
+                if (nums[mid] <= target && target <= nums[right]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+
+        }
+        return -1;
+    }
+    public boolean searchInDuplicate(int[] nums, int target) {
+        // for(int i=0;i<nums.length;i++){
+        //     if(nums[i]==target)
+        //         return true;
+        // }
+        // return false;
+
+        int left = 0;
+        int right = nums.length - 1;
+
+        while(left <= right){
+            int mid = (left + right) / 2;
+            if(nums[mid] == target) return true;
+            if(nums[left]==nums[mid] && nums[mid] == nums[right]){
+                left+=1;
+                right-=1;
+            }
+            else if(nums[left]<=nums[mid]){
+                if(nums[left] <= target && target<=nums[mid])
+                    right = mid - 1;
+                else
+                    left = mid + 1;
+            }else{
+                if(nums[mid] <= target && nums[right]>=target)
+                    left = mid + 1;
+                else
+                    right = mid - 1;
+            }
+        }
+        return false;
+    }
+    public int compress(char[] chars) {
+        int write = 0; // Pointer to write in the array
+        int read = 0;  // Pointer to read through the array
+
+        while (read < chars.length) {
+            char currentChar = chars[read];
+            int count = 0;
+            while (read < chars.length && chars[read] == currentChar) {
+                read++;
+                count++;
+            }
+            chars[write++] = currentChar;
+            if (count > 1) {
+                for (char c : Integer.toString(count).toCharArray()) {
+                    chars[write++] = c;
+                }
+            }
+        }
+
+        // Return the new length of the array
+        return write;
+    }
+    public static void main() {
 //        for (int i = 0; i < n; i++) {
 //            a[i] = i + 1;
 //        }
@@ -1745,7 +1846,7 @@ public class ArrayQuestions {
 //        }
 
 //        moveZeroToEnd(a,n);
-        int[] a = getRandomArray(5,10,1);
+        int[] a = getRandomArray(5, 10, 1);
 
 //        int[] a = {
 //                1, 0, -1, 0, -2, 2
